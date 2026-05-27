@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1194, initial-scale=1.0">
+<title>Obstetricia · Hospital Posadas</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#080C14; --s1:#0F1520; --s2:#161E2E; --s3:#1C2640;
+  --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.1);
+  --text:#DDE4F0; --muted:#5A6B88; --muted2:#8496B0;
+  --blue:#4F8EF7; --blue-d:rgba(79,142,247,0.12);
+  --green:#27C98F; --green-d:rgba(39,201,143,0.12);
+  --amber:#F0A030; --amber-d:rgba(240,160,48,0.12);
+  --red:#E85566; --red-d:rgba(232,85,102,0.12);
+  --purple:#9B7CF4; --purple-d:rgba(155,124,244,0.12);
+  --teal:#22D3EE; --teal-d:rgba(34,211,238,0.1);
+}
+html,body { width:1194px; height:834px; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Sora',sans-serif; font-size:13px; }
+.app { display:grid; grid-template-rows:50px 1fr; height:834px; }
+
+/* HEADER */
+header { background:var(--s1); border-bottom:1px solid var(--border2); display:flex; align-items:center; padding:0 18px; gap:14px; }
+.brand { display:flex; align-items:center; gap:9px; flex-shrink:0; }
+.brand-icon { width:26px; height:26px; background:var(--blue); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; }
+.brand-name { font-size:13px; font-weight:700; letter-spacing:-0.4px; color:var(--text); }
+.brand-name em { font-style:normal; color:var(--muted2); font-weight:400; }
+.vline { width:1px; height:20px; background:var(--border2); flex-shrink:0; }
+.tabs { display:flex; gap:1px; align-items:center; }
+.tab { padding:6px 13px; border-radius:7px; font-size:11.5px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; position:relative; }
+.tab:hover { color:var(--muted2); background:var(--s2); }
+.tab.on { background:var(--blue-d); color:var(--blue); }
+.tab.drop { display:flex; align-items:center; gap:4px; }
+.tab.drop .arr { font-size:8px; opacity:0.6; transition:transform 0.15s; }
+.tab.drop.open .arr { transform:rotate(180deg); }
+.dropdown { position:absolute; top:calc(100% + 6px); left:0; background:var(--s2); border:1px solid var(--border2); border-radius:9px; padding:5px; min-width:150px; z-index:999; opacity:0; pointer-events:none; transform:translateY(-4px); transition:all 0.15s; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+.tab.drop.open .dropdown { opacity:1; pointer-events:all; transform:translateY(0); }
+.ditem { padding:7px 11px; border-radius:6px; font-size:11px; color:var(--muted2); cursor:pointer; transition:all 0.1s; white-space:nowrap; }
+.ditem:hover { background:var(--s3); color:var(--text); }
+.hright { margin-left:auto; display:flex; align-items:center; gap:10px; }
+.chip { padding:3px 9px; border-radius:20px; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:500; white-space:nowrap; }
+.chip-red   { background:var(--red-d);   border:1px solid rgba(232,85,102,0.25); color:var(--red); animation:blink 2s infinite; }
+.chip-green { background:var(--green-d); border:1px solid rgba(39,201,143,0.25);  color:var(--green); }
+.chip-amber { background:var(--amber-d); border:1px solid rgba(240,160,48,0.25);   color:var(--amber); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+.ts { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); }
+.av { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--purple)); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+
+/* BODY */
+.body { display:grid; grid-template-columns:186px 1fr 204px; overflow:hidden; }
+
+/* SIDEBAR IZQ */
+.sl { border-right:1px solid var(--border); padding:14px 10px 10px; display:flex; flex-direction:column; gap:2px; overflow-y:auto; }
+.sl::-webkit-scrollbar { display:none; }
+.slabel { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); padding:10px 8px 4px; }
+.slabel:first-child { padding-top:0; }
+.sitem { padding:7px 10px; border-radius:8px; font-size:11.5px; color:var(--muted2); display:flex; align-items:center; gap:8px; cursor:pointer; transition:all 0.12s; }
+.sitem:hover { background:var(--s2); color:var(--text); }
+.sitem.on { background:var(--s2); color:var(--text); font-weight:500; }
+.sitem .ico { font-size:12px; flex-shrink:0; }
+.sitem .nbadge { margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); background:var(--s3); border-radius:8px; padding:1px 6px; }
+.sitem.on .nbadge { color:var(--blue); }
+.sl-footer { margin-top:auto; padding:10px 8px 4px; border-top:1px solid var(--border); }
+.sl-name { font-size:11px; font-weight:600; color:var(--text); }
+.sl-role { font-size:10px; color:var(--muted); margin-top:1px; }
+
+/* CENTER */
+.center { padding:14px; display:flex; flex-direction:column; gap:10px; overflow:hidden; }
+
+/* VIEWS */
+.view { display:none; flex-direction:column; gap:10px; flex:1; min-height:0; }
+.view.active { display:flex; }
+
+/* KPI strip */
+.kpis { display:grid; gap:8px; }
+.kpis-6 { grid-template-columns:repeat(6,1fr); }
+.kpis-5 { grid-template-columns:repeat(5,1fr); }
+.kpi { background:var(--s1); border:1px solid var(--border); border-radius:10px; padding:11px 13px; position:relative; overflow:hidden; }
+.kpi::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:10px 10px 0 0; }
+.kpi.c-blue::after   { background:var(--blue); }
+.kpi.c-green::after  { background:var(--green); }
+.kpi.c-amber::after  { background:var(--amber); }
+.kpi.c-red::after    { background:var(--red); }
+.kpi.c-purple::after { background:var(--purple); }
+.kpi.c-teal::after   { background:var(--teal); }
+.kpi.sem-green { border-color:rgba(39,201,143,0.3); }
+.kpi.sem-yellow { border-color:rgba(240,160,48,0.3); }
+.kpi.sem-red { border-color:rgba(232,85,102,0.3); }
+.kpi-lbl { font-size:9px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.kpi-val { font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:500; color:var(--text); line-height:1; }
+.kpi-val sup { font-size:13px; color:var(--muted2); }
+.kpi-note { font-size:9.5px; color:var(--muted); margin-top:4px; }
+.kpi-note.up { color:var(--green); }
+.kpi-note.down { color:var(--red); }
+.kpi-note.warn { color:var(--amber); }
+.sem-dot { position:absolute; top:9px; right:10px; width:7px; height:7px; border-radius:50%; }
+.sem-dot.green  { background:var(--green); box-shadow:0 0 6px var(--green); }
+.sem-dot.yellow { background:var(--amber); box-shadow:0 0 6px var(--amber); }
+.sem-dot.red    { background:var(--red);   box-shadow:0 0 6px var(--red); animation:blink 2s infinite; }
+
+/* SIP strip */
+.sip-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.sip-kpi { background:var(--s2); border-radius:8px; padding:10px 12px; border-left:2px solid var(--border2); }
+.sip-kpi.c-red   { border-color:var(--red); }
+.sip-kpi.c-amber { border-color:var(--amber); }
+.sip-kpi.c-blue  { border-color:var(--blue); }
+.sip-lbl { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); margin-bottom:3px; }
+.sip-val { font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--text); }
+.sip-meta { font-size:9px; color:var(--muted); margin-top:2px; }
+
+/* Cards */
+.card { background:var(--s1); border:1px solid var(--border); border-radius:10px; padding:13px; display:flex; flex-direction:column; gap:10px; overflow:hidden; min-height:0; }
+.ctitle { font-size:11px; font-weight:600; color:var(--text); flex-shrink:0; }
+.ctitle span { color:var(--muted); font-weight:400; font-size:10px; margin-left:5px; }
+
+/* Rows */
+.mrow { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; flex:1; min-height:0; }
+.brow2 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+
+/* Donut */
+.donut-wrap { display:flex; align-items:center; gap:14px; flex:1; min-height:0; }
+.dleg { display:flex; flex-direction:column; gap:7px; flex:1; }
+.dleg-row { display:flex; align-items:center; gap:7px; }
+.dleg-dot { width:7px; height:7px; border-radius:2px; flex-shrink:0; }
+.dleg-lbl { font-size:10px; color:var(--muted2); flex:1; }
+.dleg-val { font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text); }
+.dleg-pct { font-size:9.5px; color:var(--muted); margin-left:4px; }
+
+/* Barchart */
+.barchart { display:flex; flex-direction:column; gap:7px; flex:1; min-height:0; }
+.brow { display:flex; align-items:center; gap:7px; }
+.blbl { font-size:10px; color:var(--muted2); width:88px; flex-shrink:0; text-align:right; line-height:1.2; }
+.btrack { flex:1; height:7px; background:var(--s3); border-radius:4px; overflow:hidden; }
+.bfill { height:100%; border-radius:4px; transition:width 0.6s ease; }
+.bval { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); width:20px; text-align:right; }
+
+/* Tables */
+.mtable { width:100%; border-collapse:collapse; }
+.mtable th { font-size:9px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); padding-bottom:6px; border-bottom:1px solid var(--border2); text-align:left; }
+.mtable th.r { text-align:right; }
+.mtable td { padding:5px 0; font-size:10.5px; color:var(--text); border-bottom:1px solid var(--border); }
+.mtable td.mono { font-family:'IBM Plex Mono',monospace; }
+.mtable td.muted { color:var(--muted); }
+.mtable td.r { text-align:right; }
+
+.tag { display:inline-block; padding:2px 7px; border-radius:8px; font-size:9.5px; font-weight:600; }
+.tag-b { background:var(--blue-d);   color:var(--blue); }
+.tag-a { background:var(--amber-d);  color:var(--amber); }
+.tag-r { background:var(--red-d);    color:var(--red); }
+.tag-g { background:var(--green-d);  color:var(--green); }
+.tag-p { background:var(--purple-d); color:var(--purple); }
+.tag-t { background:var(--teal-d);   color:var(--teal); }
+
+/* Turnos */
+.turnos-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; flex:1; }
+.tcard { background:var(--s2); border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:3px; }
+.tcard-lbl { font-size:9.5px; color:var(--muted); font-weight:600; letter-spacing:0.3px; }
+.tcard-val { font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--text); }
+.tcard-sub { font-size:9.5px; color:var(--muted); }
+
+/* Ocupacion */
+.occ-rows { display:flex; flex-direction:column; gap:8px; flex:1; }
+.occ-row { display:flex; flex-direction:column; gap:3px; }
+.occ-top { display:flex; justify-content:space-between; font-size:10.5px; }
+.occ-top span:first-child { color:var(--text); font-weight:500; }
+.occ-top span:last-child  { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); }
+.occ-track { height:5px; background:var(--s3); border-radius:3px; overflow:hidden; }
+.occ-fill  { height:100%; border-radius:3px; }
+
+/* Date range */
+.date-range-bar { display:flex; align-items:center; gap:8px; padding:5px 10px; background:var(--s2); border-radius:8px; border:1px solid var(--border2); flex-shrink:0; }
+.dr-label { font-size:9.5px; color:var(--muted); font-weight:600; letter-spacing:0.4px; text-transform:uppercase; }
+.dr-btn { padding:3px 9px; border-radius:6px; font-size:10px; font-weight:500; color:var(--muted2); cursor:pointer; transition:all 0.12s; white-space:nowrap; background:transparent; border:none; }
+.dr-btn:hover { background:var(--s3); color:var(--text); }
+.dr-btn.on { background:var(--blue-d); color:var(--blue); }
+.dr-sep { color:var(--border2); font-size:12px; }
+.dr-input { background:var(--s3); border:1px solid var(--border2); border-radius:5px; color:var(--muted2); font-family:'IBM Plex Mono',monospace; font-size:9.5px; padding:2px 6px; width:80px; outline:none; }
+.dr-input:focus { border-color:rgba(79,142,247,0.4); color:var(--text); }
+.dr-apply { padding:3px 9px; border-radius:5px; background:var(--blue-d); color:var(--blue); font-size:9.5px; font-weight:600; cursor:pointer; border:1px solid rgba(79,142,247,0.25); }
+
+/* RIGHT SIDEBAR */
+.sr { border-left:1px solid var(--border); padding:14px 12px; display:flex; flex-direction:column; gap:14px; overflow-y:auto; }
+.sr::-webkit-scrollbar { display:none; }
+.sr-title { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.alerts { display:flex; flex-direction:column; gap:7px; }
+.alert { background:var(--s2); border-radius:8px; padding:9px 10px; display:flex; flex-direction:column; gap:3px; border-left:3px solid transparent; }
+.alert.crit  { border-color:var(--red); }
+.alert.warn  { border-color:var(--amber); }
+.alert.info  { border-color:var(--blue); }
+.alert-msg { font-size:10.5px; color:var(--text); line-height:1.35; }
+.alert-ts  { font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--muted); }
+.inf-list { display:flex; flex-direction:column; gap:6px; }
+.inf-row { display:flex; justify-content:space-between; font-size:10.5px; }
+.inf-row span:first-child { color:var(--muted2); }
+.inf-row span:last-child  { font-family:'IBM Plex Mono',monospace; color:var(--text); }
+.inf-row.total span { color:var(--text); font-weight:600; }
+.inf-row.total span:last-child { color:var(--amber); }
+.giro-list { display:flex; flex-direction:column; gap:7px; }
+.giro-row { display:flex; justify-content:space-between; align-items:center; font-size:10.5px; }
+.giro-row span:first-child { color:var(--muted2); }
+.giro-val { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text); }
+.giro-sub { font-size:9px; color:var(--muted); }
+
+/* CO table scrollable */
+.co-table-wrap { flex:1; overflow-y:auto; min-height:0; }
+.co-table-wrap::-webkit-scrollbar { width:3px; }
+.co-table-wrap::-webkit-scrollbar-thumb { background:var(--s3); border-radius:3px; }
+
+/* Sube a ARO row */
+.row-aro td { color:var(--purple) !important; font-style:italic; }
+.row-aro td.mono { color:var(--purple) !important; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">✚</div>
+    <div class="brand-name">Obstetricia <em>· Posadas</em></div>
+  </div>
+  <div class="vline"></div>
+  <div class="tabs">
+    <div class="tab on" onclick="showView('resumen',this)">Resumen</div>
+    <div class="tab" onclick="showView('co',this)">CO</div>
+    <div class="tab drop" onclick="toggleDrop(this,event)">
+      Internación <span class="arr">▾</span>
+      <div class="dropdown">
+        <div class="ditem" onclick="showView('aro',null)">ARO</div>
+        <div class="ditem" onclick="showView('puerperio',null)">Puerperio</div>
+      </div>
+    </div>
+    <div class="tab" onclick="showView('ceepyp',this)">CEEPYP</div>
+    <div class="tab" onclick="showView('hospdia',this)">Hosp. Día</div>
+    <div class="tab" onclick="showView('consultorio',this)">Consultorio</div>
+    <div class="tab drop" onclick="toggleDrop(this,event)">
+      SIP <span class="arr">▾</span>
+      <div class="dropdown">
+        <div class="ditem" onclick="showView('sip-estadistica',null)">Estadística</div>
+        <div class="ditem" onclick="showView('sip-gestion',null)">Tablero de Gestión</div>
+        <div class="ditem" onclick="showView('sip-indicadores',null)">Indicadores</div>
+      </div>
+    </div>
+  </div>
+  <div class="hright">
+    <div class="chip chip-red" id="chip-alertas">⚑ — alertas</div>
+    <div class="chip chip-green">● En vivo</div>
+    <div onclick="recargarVista()" style="padding:3px 10px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;background:var(--s3);border:1px solid var(--border2);color:var(--muted2);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted2)'" id="btn-reload">↻ Actualizar</div>
+
+    <div class="ts" id="live-ts">—</div>
+    <div class="av">ML</div>
+  </div>
+</header>
+
+<div class="body">
+
+<!-- SIDEBAR IZQ -->
+<aside class="sl">
+  <div class="slabel">Sectores</div>
+  <div class="sitem on"><span class="ico">⊞</span> Vista general</div>
+  <div class="sitem"><span class="ico">👶</span> Puerperio <span class="nbadge">26</span></div>
+  <div class="sitem"><span class="ico">⚠</span> ARO <span class="nbadge">8</span></div>
+  <div class="sitem"><span class="ico">🍼</span> Centro Obstétrico</div>
+  <div class="sitem"><span class="ico">🏨</span> Hospital de Día</div>
+  <div class="sitem"><span class="ico">📋</span> Consultorio PB</div>
+  <div class="sitem"><span class="ico">🔬</span> CEEPYP</div>
+  <div class="slabel">Indicadores</div>
+  <div class="sitem"><span class="ico">%</span> Tasa cesáreas</div>
+  <div class="sitem"><span class="ico">↻</span> Giro de cama</div>
+  <div class="sitem"><span class="ico">⊕</span> Diagnósticos ARO</div>
+  <div class="sitem"><span class="ico">🦠</span> Infecciones</div>
+  <div class="slabel">Período</div>
+  <div class="sitem on" id="sl-hoy" onclick="setSLRango(this,'hoy')"><span class="ico">·</span> Hoy</div>
+  <div class="sitem" id="sl-semana" onclick="setSLRango(this,'semana')"><span class="ico">·</span> Esta semana</div>
+  <div class="sitem" id="sl-mes" onclick="setSLRango(this,'mes')"><span class="ico">·</span> Este mes</div>
+  <div class="sitem" id="sl-custom" onclick="setSLRangoCustom(this)"><span class="ico">·</span> Personalizado</div>
+  <div class="sl-footer">
+    <div class="sl-name">Dr. Mariano Lorea</div>
+    <div class="sl-role">Jefe de Servicio</div>
+  </div>
+</aside>
+
+<!-- CENTRO -->
+<main class="center">
+
+  <!-- ══════════ VISTA RESUMEN ══════════ -->
+  <div class="view active" id="view-resumen">
+
+    <div class="date-range-bar">
+      <span class="dr-label">Período</span>
+      <button class="dr-btn on" onclick="setRangeBtn(this,'hoy')">Hoy</button>
+      <button class="dr-btn" onclick="setRangeBtn(this,'semana')">Esta semana</button>
+      <button class="dr-btn" onclick="setRangeBtn(this,'mes')">Este mes</button>
+      <span class="dr-sep">|</span>
+      <input class="dr-input" type="date" id="dr-from">
+      <span style="color:var(--muted);font-size:10px">→</span>
+      <input class="dr-input" type="date" id="dr-to">
+      <div class="dr-apply" onclick="applyRangeCustom()">Aplicar</div>
+    </div>
+
+    <div class="kpis kpis-6">
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Partos hoy</div>
+        <div class="kpi-val">4</div>
+        <div class="kpi-note up">26/05 hasta ahora</div>
+      </div>
+      <div class="kpi c-amber sem-red" id="kpi-cesareas">
+        <div class="sem-dot red"></div>
+        <div class="kpi-lbl">Tasa cesáreas</div>
+        <div class="kpi-val">57.7<sup>%</sup></div>
+        <div class="kpi-note warn">↑ meta &lt;52%</div>
+      </div>
+      <div class="kpi c-green sem-green" id="kpi-puerperio">
+        <div class="sem-dot green"></div>
+        <div class="kpi-lbl">Ocup. Puerperio</div>
+        <div class="kpi-val">62<sup>%</sup></div>
+        <div class="kpi-note">26/44 camas</div>
+      </div>
+      <div class="kpi c-purple sem-red" id="kpi-aro">
+        <div class="sem-dot red"></div>
+        <div class="kpi-lbl">Ocup. ARO</div>
+        <div class="kpi-val">73<sup>%</sup></div>
+        <div class="kpi-note warn">8/11 · censo 26/05</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Hosp. Día hoy</div>
+        <div class="kpi-val">14</div>
+        <div class="kpi-note">0 eco · 9 NST</div>
+      </div>
+      <div class="kpi c-red sem-yellow" id="kpi-infec">
+        <div class="sem-dot yellow"></div>
+        <div class="kpi-lbl">Infec. mayo</div>
+        <div class="kpi-val">14</div>
+        <div class="kpi-note down">8 intra · 6 amb</div>
+      </div>
+    </div>
+
+    <div class="sip-grid">
+      <div class="sip-kpi c-red">
+        <div class="sip-lbl">Tasa cesáreas 2025 · SIP</div>
+        <div class="sip-val">58.4<span style="font-size:11px;color:var(--muted)">%</span></div>
+        <div class="sip-meta">Meta &lt;52% · anual confirmado</div>
+      </div>
+      <div class="sip-kpi c-amber">
+        <div class="sip-lbl">Inf. sitio quirúrgico · SIP</div>
+        <div class="sip-val">4.3<span style="font-size:11px;color:var(--muted)">%</span></div>
+        <div class="sip-meta">Meta &lt;5% · zona amarilla</div>
+      </div>
+      <div class="sip-kpi c-blue">
+        <div class="sip-lbl">Near miss · SIP</div>
+        <div class="sip-val">1.9<span style="font-size:11px;color:var(--muted)">%</span></div>
+        <div class="sip-meta">Seguimiento trimestral</div>
+      </div>
+    </div>
+
+    <div class="mrow">
+      <div class="card">
+        <div class="ctitle">Partos del mes <span>Mayo 2026 · parcial al 26/05</span></div>
+        <div class="donut-wrap">
+          <svg width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0">
+            <circle cx="44" cy="44" r="32" fill="none" stroke="#161E2E" stroke-width="12"/>
+            <circle cx="44" cy="44" r="32" fill="none" stroke="#4F8EF7" stroke-width="12"
+              stroke-dasharray="86 115" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+            <circle cx="44" cy="44" r="32" fill="none" stroke="#9B7CF4" stroke-width="12"
+              stroke-dasharray="115 86" stroke-dashoffset="-86" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+            <text x="44" y="40" text-anchor="middle" fill="#DDE4F0" font-family="IBM Plex Mono" font-size="16" font-weight="500">26</text>
+            <text x="44" y="52" text-anchor="middle" fill="#5A6B88" font-family="Sora" font-size="8">partos</text>
+          </svg>
+          <div class="dleg">
+            <div class="dleg-row"><div class="dleg-dot" style="background:var(--blue)"></div><div class="dleg-lbl">Vaginal</div><div class="dleg-val">11 <span class="dleg-pct">42%</span></div></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:var(--purple)"></div><div class="dleg-lbl">Cesárea</div><div class="dleg-val">15 <span class="dleg-pct">58%</span></div></div>
+            <div class="dleg-row" style="margin-top:5px;padding-top:7px;border-top:1px solid var(--border2)">
+              <div class="dleg-dot" style="background:transparent;border:1px solid var(--red);border-radius:50%"></div>
+              <div class="dleg-lbl">Tasa cesáreas</div>
+              <div class="dleg-val" style="color:var(--red)">57.7%</div>
+            </div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:transparent"></div><div class="dleg-lbl">FM registrado</div><div class="dleg-val" style="color:var(--red)">1</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle">CEEPYP <span>hoy</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;flex:1">
+          <div class="tcard">
+            <div class="tcard-lbl">Ecog. Obs.</div>
+            <div class="tcard-val" style="color:var(--blue)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-lbl">Scan Fetal</div>
+            <div class="tcard-val" style="color:var(--teal)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-lbl">Doppler</div>
+            <div class="tcard-val" style="color:var(--purple)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-lbl">TN</div>
+            <div class="tcard-val" style="color:var(--green)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-lbl">Gineco</div>
+            <div class="tcard-val" style="color:var(--amber)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-lbl">Otros</div>
+            <div class="tcard-val" style="color:var(--muted2)">—</div>
+            <div class="tcard-sub">sin datos</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:9.5px;padding-top:6px;border-top:1px solid var(--border)">
+          <span style="color:var(--muted)">Ref. Abril 2026</span>
+          <span style="font-family:'IBM Plex Mono',monospace;color:var(--muted2)">585 procedimientos</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle">Consultorio PB <span>26/05</span></div>
+        <div class="turnos-grid">
+          <div class="tcard"><div class="tcard-lbl">Disponibles</div><div class="tcard-val" style="color:var(--blue)">69</div><div class="tcard-sub">turnos</div></div>
+          <div class="tcard"><div class="tcard-lbl">Asignados</div><div class="tcard-val" style="color:var(--text)">60</div><div class="tcard-sub">de 69</div></div>
+          <div class="tcard"><div class="tcard-lbl">Atendidos</div><div class="tcard-val" style="color:var(--green)">52</div><div class="tcard-sub">87% presencia</div></div>
+        </div>
+        <div style="margin-top:2px">
+          <div style="font-size:9.5px;color:var(--muted);margin-bottom:6px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase">Ausentismo del mes</div>
+          <div class="btrack" style="height:6px"><div class="bfill" style="width:22%;background:var(--red)"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:3px">
+            <span style="font-size:9.5px;color:var(--muted)">22% promedio mayo · <span style="color:var(--red)">⚑ zona roja</span></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--amber)">↑ vs abril 14%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brow2">
+      <div class="card" style="padding:11px 13px">
+        <div class="ctitle">Últimos eventos · CO</div>
+        <table class="mtable">
+          <thead><tr><th>Hora</th><th>Tipo</th><th>EG</th><th>Peso</th><th>Apgar</th><th>Comp.</th></tr></thead>
+          <tbody>
+            <tr><td class="mono muted">20:30</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">39s</td><td class="mono">3.570g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
+            <tr><td class="mono muted">13:00</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">35s</td><td class="mono">—</td><td class="mono">—</td><td><span class="tag tag-r">RPM+DCA</span></td></tr>
+            <tr><td class="mono muted">11:51</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">38.5s</td><td class="mono">3.875g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
+            <tr><td class="mono muted">10:20</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">41s</td><td class="mono">3.925g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:11px 13px">
+        <div class="ctitle">Hospital de Día <span>26/05 · 6° piso</span></div>
+        <table class="mtable">
+          <thead><tr><th>Indicador</th><th class="r">N</th><th class="r">Obs.</th></tr></thead>
+          <tbody>
+            <tr><td>Pacientes atendidas</td><td class="mono r">14</td><td class="muted r">—</td></tr>
+            <tr><td>Ecografías</td><td class="mono r">0</td><td class="r"><span class="tag tag-r">S/eco</span></td></tr>
+            <tr><td>NST realizados</td><td class="mono r">9</td><td class="muted r">—</td></tr>
+            <tr><td>Turnos quirúrgicos</td><td class="mono r">4</td><td class="muted r">—</td></tr>
+            <tr><td>Internadas ARO</td><td class="mono r">1</td><td class="r"><span class="tag tag-a">→ ARO</span></td></tr>
+            <tr><td>Inducciones</td><td class="mono r">2</td><td class="muted r">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:11px 13px">
+        <div class="ctitle">Camas <span>censo 26/05 · 11:21</span></div>
+        <div class="occ-rows">
+          <div class="occ-row"><div class="occ-top"><span>Puerperio</span><span>26 / 44</span></div><div class="occ-track"><div class="occ-fill" style="width:59%;background:var(--blue)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>ARO</span><span>8 / 11</span></div><div class="occ-track"><div class="occ-fill" style="width:73%;background:var(--purple)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Prestadas</span><span>8</span></div><div class="occ-track"><div class="occ-fill" style="width:50%;background:var(--amber)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Bloqueadas</span><span>0</span></div><div class="occ-track"><div class="occ-fill" style="width:0%;background:var(--muted)"></div></div></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;flex-direction:column;gap:5px">
+          <div style="font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">Giro de cama · mayo</div>
+          <div class="giro-list">
+            <div class="giro-row"><span>Puerperio prestadas</span><div><span class="giro-val" style="color:var(--amber)">8</span> <span class="giro-sub">camas</span></div></div>
+            <div class="giro-row"><span>ARO disponibles</span><div><span class="giro-val" style="color:var(--green)">3</span> <span class="giro-sub">camas</span></div></div>
+            <div class="giro-row"><span>Estadía prom.</span><div><span class="giro-val">3.8</span> <span class="giro-sub">días</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ VISTA CO ══════════ -->
+  <div class="view" id="view-co">
+
+    <div class="kpis kpis-5">
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Nacimientos hoy</div>
+        <div class="kpi-val" id="co-total">2</div>
+        <div class="kpi-note">26/05 · resueltos</div>
+      </div>
+      <div class="kpi c-amber sem-red">
+        <div class="sem-dot red"></div>
+        <div class="kpi-lbl">Tasa cesáreas hoy</div>
+        <div class="kpi-val">50<sup>%</sup></div>
+        <div class="kpi-note warn">1C / 1V · meta &lt;52%</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Consultas del día</div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-note">Sin dato cargado</div>
+      </div>
+      <div class="kpi c-green">
+        <div class="kpi-lbl">Vaginales</div>
+        <div class="kpi-val" style="color:var(--green)">1</div>
+        <div class="kpi-note up">50%</div>
+      </div>
+      <div class="kpi c-purple">
+        <div class="kpi-lbl">Sube a ARO</div>
+        <div class="kpi-val" style="color:var(--purple)">2</div>
+        <div class="kpi-note">sin resolución</div>
+      </div>
+    </div>
+
+    <div class="card" style="flex:1;min-height:0;padding:12px 14px">
+      <div class="ctitle">Eventos Centro Obstétrico <span id="co-fecha">26/05/2026</span></div>
+      <div class="co-table-wrap">
+        <table class="mtable">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Tipo</th>
+              <th>Indicación</th>
+              <th>EG</th>
+              <th>Peso RN</th>
+              <th>Apgar</th>
+              <th>Comp. materna</th>
+              <th>N HC</th>
+            </tr>
+          </thead>
+          <tbody id="co-tbody">
+            <!-- Datos 26/05 -->
+            <tr class="row-aro">
+              <td class="mono muted">08:00</td>
+              <td><span class="tag tag-p">↑ ARO</span></td>
+              <td class="muted" style="font-size:9.5px">Cx programada</td>
+              <td class="mono">—</td>
+              <td class="mono muted">—</td>
+              <td class="mono muted">—</td>
+              <td class="muted">—</td>
+              <td class="mono muted">94717946</td>
+            </tr>
+            <tr class="row-aro">
+              <td class="mono muted">05:00</td>
+              <td><span class="tag tag-p">↑ ARO</span></td>
+              <td class="muted" style="font-size:9.5px">Ind. prog. Mac III</td>
+              <td class="mono">41s</td>
+              <td class="mono muted">—</td>
+              <td class="mono muted">—</td>
+              <td class="muted">—</td>
+              <td class="mono muted">95313933</td>
+            </tr>
+            <!-- Datos 25/05 para contexto -->
+            <tr style="background:rgba(255,255,255,0.01)">
+              <td colspan="8" style="font-size:9px;color:var(--muted);padding:6px 0 4px;border-bottom:1px solid var(--border2)">— 25/05/2026 —</td>
+            </tr>
+            <tr>
+              <td class="mono muted">20:30</td>
+              <td><span class="tag tag-b">Vaginal</span></td>
+              <td class="muted" style="font-size:9.5px">—</td>
+              <td class="mono">39s</td>
+              <td class="mono">3.570g</td>
+              <td class="mono">9/10</td>
+              <td class="muted">—</td>
+              <td class="mono muted">96054817</td>
+            </tr>
+            <tr>
+              <td class="mono muted">13:00</td>
+              <td><span class="tag tag-a">Cesárea</span></td>
+              <td style="font-size:9.5px">Cx iterativa</td>
+              <td class="mono">35s</td>
+              <td class="mono muted">—</td>
+              <td class="mono muted">—</td>
+              <td><span class="tag tag-r">RPM+DCA</span></td>
+              <td class="mono muted">34690858</td>
+            </tr>
+            <tr>
+              <td class="mono muted">12:00</td>
+              <td><span class="tag tag-p">↑ ARO</span></td>
+              <td class="muted" style="font-size:9.5px">Mal. pulm. fetal</td>
+              <td class="mono">40.6s</td>
+              <td class="mono muted">—</td>
+              <td class="mono muted">—</td>
+              <td class="muted">—</td>
+              <td class="mono muted">45313933</td>
+            </tr>
+            <tr>
+              <td class="mono muted">11:51</td>
+              <td><span class="tag tag-a">Cesárea</span></td>
+              <td style="font-size:9.5px">Electiva</td>
+              <td class="mono">38.5s</td>
+              <td class="mono">3.875g</td>
+              <td class="mono">9/10</td>
+              <td class="muted">—</td>
+              <td class="mono muted">94663202</td>
+            </tr>
+            <tr>
+              <td class="mono muted">11:30</td>
+              <td><span class="tag tag-p">↑ ARO</span></td>
+              <td class="muted" style="font-size:9.5px">DBT G / Cx prog.</td>
+              <td class="mono">38.5s</td>
+              <td class="mono muted">—</td>
+              <td class="mono muted">—</td>
+              <td class="muted">—</td>
+              <td class="mono muted">94717946</td>
+            </tr>
+            <tr>
+              <td class="mono muted">10:20</td>
+              <td><span class="tag tag-b">Vaginal</span></td>
+              <td class="muted" style="font-size:9.5px">—</td>
+              <td class="mono">41s</td>
+              <td class="mono">3.925g</td>
+              <td class="mono">9/10</td>
+              <td class="muted">—</td>
+              <td class="mono muted">40254505</td>
+            </tr>
+            <tr>
+              <td class="mono muted">09:00</td>
+              <td><span class="tag tag-a">Cesárea</span></td>
+              <td style="font-size:9.5px">Preeclampsia/HTA</td>
+              <td class="mono">39s</td>
+              <td class="mono">3.425g</td>
+              <td class="mono">9/10</td>
+              <td class="muted">—</td>
+              <td class="mono muted">38166323</td>
+            </tr>
+            <tr>
+              <td class="mono muted">04:30</td>
+              <td><span class="tag tag-b">Vaginal</span></td>
+              <td class="muted" style="font-size:9.5px">—</td>
+              <td class="mono">39s</td>
+              <td class="mono">2.710g</td>
+              <td class="mono">9/10</td>
+              <td class="muted">—</td>
+              <td class="mono muted">42631202</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ VISTAS PLACEHOLDER ══════════ -->
+  <div class="view" id="view-aro">
+
+    <!-- KPIs ARO -->
+    <div class="kpis kpis-5" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi c-purple sem-red">
+        <div class="sem-dot red"></div>
+        <div class="kpi-lbl">Internadas ARO</div>
+        <div class="kpi-val">8</div>
+        <div class="kpi-note warn">8/11 · 73% ocup.</div>
+      </div>
+      <div class="kpi c-amber">
+        <div class="kpi-lbl">Diag. más frecuente</div>
+        <div class="kpi-val" style="font-size:16px;color:var(--amber)">Cx Prog.</div>
+        <div class="kpi-note">3 pacientes</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Estadía prom.</div>
+        <div class="kpi-val">3.2</div>
+        <div class="kpi-note">días · mayo</div>
+      </div>
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Ingresos mes</div>
+        <div class="kpi-val">15</div>
+        <div class="kpi-note up">mayo actual</div>
+      </div>
+    </div>
+
+    <!-- Main row -->
+    <div style="display:grid;grid-template-columns:1fr 220px;gap:10px;flex:1;min-height:0">
+
+      <!-- Tabla pacientes -->
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Pacientes ARO <span>activas · 8 · 26/05/2026</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>N HC</th>
+                <th>Ingreso</th>
+                <th>Días</th>
+                <th>Diagnóstico 1</th>
+                <th>Diagnóstico 2</th>
+                <th>Diagnóstico 3</th>
+                <th>Destino</th>
+                <th>Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono muted">40852603</td>
+                <td class="mono muted">21/05</td>
+                <td class="mono" style="color:var(--red)">5</td>
+                <td><span class="tag tag-p">Lupus</span></td>
+                <td><span class="tag tag-t">Miastenia G.</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td style="font-size:9px;color:var(--muted)">Sin alta</td>
+              </tr>
+              <tr>
+                <td class="mono muted">49547347</td>
+                <td class="mono muted">21/05</td>
+                <td class="mono" style="color:var(--red)">5</td>
+                <td><span class="tag tag-r">APP</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td style="font-size:9px;color:var(--muted)">TV 23mm. 25s</td>
+              </tr>
+              <tr>
+                <td class="mono muted">43001266</td>
+                <td class="mono muted">23/05</td>
+                <td class="mono" style="color:var(--amber)">3</td>
+                <td><span class="tag tag-a">Anemia</span></td>
+                <td><span class="tag tag-r">Preeclampsia</span></td>
+                <td style="font-size:9.5px;color:var(--muted2)">Emb. mal ctrl.</td>
+                <td class="muted">—</td>
+                <td style="font-size:9px;color:var(--muted)">Sin alta</td>
+              </tr>
+              <tr>
+                <td class="mono muted">94663202</td>
+                <td class="mono muted">24/05</td>
+                <td class="mono" style="color:var(--amber)">2</td>
+                <td><span class="tag tag-b">Cx programada</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td><span class="tag tag-g">Alta</span></td>
+                <td style="font-size:9px;color:var(--muted)">Cx 26/05</td>
+              </tr>
+              <tr>
+                <td class="mono muted">45313933</td>
+                <td class="mono muted">25/05</td>
+                <td class="mono">1</td>
+                <td><span class="tag tag-b">Ind. programada</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td><span class="tag tag-a">→ CO</span></td>
+                <td style="font-size:9px;color:var(--muted)">Mal. pulm. fetal</td>
+              </tr>
+              <tr>
+                <td class="mono muted">94717946</td>
+                <td class="mono muted">25/05</td>
+                <td class="mono">1</td>
+                <td><span class="tag tag-b">Cx programada</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td><span class="tag tag-a">→ CO</span></td>
+                <td style="font-size:9px;color:var(--muted)">DBT G / CIE</td>
+              </tr>
+              <tr>
+                <td class="mono muted">95313933</td>
+                <td class="mono muted">26/05</td>
+                <td class="mono">0</td>
+                <td><span class="tag tag-b">Ind. programada</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td style="font-size:9px;color:var(--muted)">Mac III · 41s</td>
+              </tr>
+              <tr>
+                <td class="mono muted">30068426</td>
+                <td class="mono muted">26/05</td>
+                <td class="mono">0</td>
+                <td><span class="tag tag-r">RCIU</span></td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td style="font-size:9px;color:var(--muted)">Recibida · 30s</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel derecho: diagnósticos + combinaciones -->
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Diagnósticos <span>activas</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">Cx programada</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--blue)"></div></div><div class="bval">3</div></div>
+            <div class="brow"><div class="blbl">Ind. programada</div><div class="btrack"><div class="bfill" style="width:66%;background:var(--teal)"></div></div><div class="bval">2</div></div>
+            <div class="brow"><div class="blbl">APP</div><div class="btrack"><div class="bfill" style="width:33%;background:var(--red)"></div></div><div class="bval">1</div></div>
+            <div class="brow"><div class="blbl">Lupus</div><div class="btrack"><div class="bfill" style="width:33%;background:var(--purple)"></div></div><div class="bval">1</div></div>
+            <div class="brow"><div class="blbl">Anemia+HTA</div><div class="btrack"><div class="bfill" style="width:33%;background:var(--amber)"></div></div><div class="bval">1</div></div>
+            <div class="brow"><div class="blbl">RCIU</div><div class="btrack"><div class="bfill" style="width:33%;background:var(--red)"></div></div><div class="bval">1</div></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Combinaciones <span>mes actual</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
+            <div style="background:var(--s2);border-radius:7px;padding:7px 9px">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Lupus + Miastenia G.</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">1 paciente · complejo</div>
+            </div>
+            <div style="background:var(--s2);border-radius:7px;padding:7px 9px">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">APP + Sin controles</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">1 paciente · 25 sem</div>
+            </div>
+            <div style="background:var(--s2);border-radius:7px;padding:7px 9px">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Anemia + Preeclampsia</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">1 paciente · mal ctrl.</div>
+            </div>
+            <div style="background:var(--s2);border-radius:7px;padding:7px 9px">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">RCIU · derivada externa</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">N. Sra. del Carmen · 30s</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="view" id="view-puerperio">
+
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi c-blue sem-green">
+        <div class="sem-dot green"></div>
+        <div class="kpi-lbl">Internadas</div>
+        <div class="kpi-val">26</div>
+        <div class="kpi-note">26/44 · 59% ocup.</div>
+      </div>
+      <div class="kpi c-amber">
+        <div class="kpi-lbl">Prestadas</div>
+        <div class="kpi-val" style="color:var(--amber)">8</div>
+        <div class="kpi-note warn">↑ alza sostenida</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Estadía prom.</div>
+        <div class="kpi-val">2.4</div>
+        <div class="kpi-note">días · mayo</div>
+      </div>
+      <div class="kpi c-green">
+        <div class="kpi-lbl">Altas hoy</div>
+        <div class="kpi-val">2</div>
+        <div class="kpi-note up">26/05</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 220px;gap:10px;flex:1;min-height:0">
+
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Pacientes Puerperio <span>activas · 26 · 26/05/2026</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>N HC</th>
+                <th>Ingreso</th>
+                <th>Días</th>
+                <th>Diagnóstico</th>
+                <th>Alta</th>
+                <th>Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono muted">1529835</td><td class="mono muted">25/05</td><td class="mono">1</td><td style="font-size:9.5px">Emb. 41.1s · SGB · TDP</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Tapia Daniela</td></tr>
+              <tr><td class="mono muted">1587808</td><td class="mono muted">25/05</td><td class="mono">1</td><td style="font-size:9.5px">Emb. 37.1s · TDP</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Cortez Laura</td></tr>
+              <tr><td class="mono muted">1391695</td><td class="mono muted">25/05</td><td class="mono">1</td><td style="font-size:9.5px">HIE + Meniere + Cx prog 26/05</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Gimenez Lara</td></tr>
+              <tr><td class="mono muted">1558908</td><td class="mono muted">24/05</td><td class="mono">2</td><td style="font-size:9.5px">Emb. 40.5s · TDP</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Elias Jacqueline</td></tr>
+              <tr><td class="mono muted">1587680</td><td class="mono muted">24/05</td><td class="mono">2</td><td style="font-size:9.5px">TDP · trombocitopenia · SGB</td><td><span class="tag tag-g">26/05</span></td><td style="font-size:9px;color:var(--muted)">Screpis Candela</td></tr>
+              <tr><td class="mono muted">1587691</td><td class="mono muted">24/05</td><td class="mono">2</td><td style="font-size:9.5px">Cx anterior · bishop desf.</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Rodriguez Micaela</td></tr>
+              <tr><td class="mono muted">1587683</td><td class="mono muted">24/05</td><td class="mono">2</td><td style="font-size:9.5px">Alto peso EG · Cx prog.</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Laura Liz</td></tr>
+              <tr><td class="mono muted">1587665</td><td class="mono muted">23/05</td><td class="mono">3</td><td style="font-size:9.5px">Cx ant. + anemia · Cx 24/05</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Acosta Daiana</td></tr>
+              <tr><td class="mono muted">1559924</td><td class="mono muted">25/05</td><td class="mono">1</td><td style="font-size:9.5px">Emb. 37.5s · TDP · mal ctrl.</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Frias Martha</td></tr>
+              <tr><td class="mono muted">1537910</td><td class="mono muted">21/05</td><td class="mono" style="color:var(--amber)">5</td><td style="font-size:9.5px">Cx ant. · Cx prog.</td><td><span class="tag tag-g">25/05</span></td><td style="font-size:9px;color:var(--muted)">Nazar Lara</td></tr>
+              <tr><td class="mono muted">1587629</td><td class="mono muted">22/05</td><td class="mono" style="color:var(--amber)">4</td><td style="font-size:9.5px">RPM reciente · LAC</td><td><span class="tag tag-g">25/05</span></td><td style="font-size:9px;color:var(--muted)">Orellano Romina</td></tr>
+              <tr><td class="mono muted">1587639</td><td class="mono muted">22/05</td><td class="mono" style="color:var(--amber)">4</td><td style="font-size:9.5px">DBT G · SGB · ind. prog.</td><td><span class="tag tag-g">25/05</span></td><td style="font-size:9px;color:var(--muted)">Samara Ayub</td></tr>
+              <tr><td class="mono muted">1497930</td><td class="mono muted">22/05</td><td class="mono" style="color:var(--amber)">4</td><td style="font-size:9.5px">Pelviana · Cx ant. · artritis</td><td class="muted">—</td><td style="font-size:9px;color:var(--muted)">Gomez Florencia</td></tr>
+              <tr><td class="mono muted">1587200</td><td class="mono muted">15/05</td><td class="mono" style="color:var(--red)">11</td><td style="font-size:9.5px">7° PO Cx · colección abdom.</td><td class="muted">—</td><td style="font-size:9px;color:var(--red)">ISQ activa</td></tr>
+              <tr><td class="mono muted">1586983</td><td class="mono muted">15/05</td><td class="mono" style="color:var(--red)">11</td><td style="font-size:9.5px">11° PO · imagen subaponeuro.</td><td class="muted">—</td><td style="font-size:9px;color:var(--red)">ISQ activa</td></tr>
+              <tr><td class="mono muted">48491225</td><td class="mono muted">15/05</td><td class="mono" style="color:var(--red)">11</td><td style="font-size:9.5px">5° PPPEE · endometritis</td><td class="muted">—</td><td style="font-size:9px;color:var(--red)">Endometritis</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Estado <span>hoy</span></div>
+          <div class="occ-rows" style="gap:6px;margin-top:4px">
+            <div class="occ-row">
+              <div class="occ-top"><span>Ocupadas</span><span>26 / 44</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:59%;background:var(--blue)"></div></div>
+            </div>
+            <div class="occ-row">
+              <div class="occ-top"><span>Prestadas</span><span>8</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:50%;background:var(--amber)"></div></div>
+            </div>
+            <div class="occ-row">
+              <div class="occ-top"><span>Disponibles</span><span>18</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:41%;background:var(--green)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Infecciones <span>activas</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+            <div style="background:var(--red-d);border-radius:7px;padding:7px 9px;border-left:2px solid var(--red)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">ISQ · 2 pacientes</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">Colección + secreción · 11° día PO</div>
+            </div>
+            <div style="background:var(--red-d);border-radius:7px;padding:7px 9px;border-left:2px solid var(--amber)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Endometritis · 1 paciente</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">5° día PPPEE · en tratamiento</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Altas recientes <span>últimos 3 días</span></div>
+          <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px">
+            <div style="display:flex;justify-content:space-between;font-size:10px">
+              <span style="color:var(--muted2)">26/05</span>
+              <span style="font-family:'IBM Plex Mono',monospace;color:var(--green)">2 altas</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px">
+              <span style="color:var(--muted2)">25/05</span>
+              <span style="font-family:'IBM Plex Mono',monospace;color:var(--text)">4 altas</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px">
+              <span style="color:var(--muted2)">24/05</span>
+              <span style="font-family:'IBM Plex Mono',monospace;color:var(--text)">3 altas</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;padding-top:5px;border-top:1px solid var(--border)">
+              <span style="color:var(--muted)">Promedio diario mayo</span>
+              <span style="font-family:'IBM Plex Mono',monospace;color:var(--muted2)">3.2</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="view" id="view-ceepyp">
+
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Ecog. Obstétricas</div>
+        <div class="kpi-val" id="ceepyp-eco">—</div>
+        <div class="kpi-note">hoy</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Scan Fetal</div>
+        <div class="kpi-val" id="ceepyp-scan">—</div>
+        <div class="kpi-note">hoy</div>
+      </div>
+      <div class="kpi c-purple">
+        <div class="kpi-lbl">Doppler Obst.</div>
+        <div class="kpi-val" id="ceepyp-doppler">—</div>
+        <div class="kpi-note">hoy</div>
+      </div>
+      <div class="kpi c-green">
+        <div class="kpi-lbl">TN + Gineco</div>
+        <div class="kpi-val" id="ceepyp-tn">—</div>
+        <div class="kpi-note">hoy</div>
+      </div>
+      <div class="kpi c-amber">
+        <div class="kpi-lbl">Total mes</div>
+        <div class="kpi-val" id="ceepyp-total">585</div>
+        <div class="kpi-note">Abril 2026 · ref.</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 210px;gap:10px;flex:1;min-height:0">
+
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Registro CEEPYP <span>por día · responsable: Secretaría</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th class="r">Ecog. Obs</th>
+                <th class="r">Scan Fetal</th>
+                <th class="r">Doppler</th>
+                <th class="r">TN</th>
+                <th class="r">Gineco</th>
+                <th class="r">Puerperal</th>
+                <th class="r">Cervico.</th>
+                <th class="r">VPS</th>
+                <th class="r">Punción</th>
+                <th>Obs.</th>
+              </tr>
+            </thead>
+            <tbody id="ceepyp-tbody">
+              <tr>
+                <td colspan="11" style="text-align:center;padding:20px;color:var(--muted);font-size:10.5px">
+                  Sin datos cargados aún · La solapa CEEPYP fue creada en el Sheets
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Fila de referencia Abril -->
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+          <div style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px">Referencia · Abril 2026</div>
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>Mes</th>
+                <th class="r">Ecog.</th>
+                <th class="r">Scan</th>
+                <th class="r">Doppler</th>
+                <th class="r">TN</th>
+                <th class="r">Gineco</th>
+                <th class="r">Puerp.</th>
+                <th class="r">Cervico.</th>
+                <th class="r">VPS</th>
+                <th class="r">Punción</th>
+                <th class="r">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muted">Abril</td>
+                <td class="mono r">336</td>
+                <td class="mono r">95</td>
+                <td class="mono r">88</td>
+                <td class="mono r">31</td>
+                <td class="mono r">25</td>
+                <td class="mono r">3</td>
+                <td class="mono r">6</td>
+                <td class="mono r">2</td>
+                <td class="mono r">2</td>
+                <td class="mono r" style="color:var(--blue)">585</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel derecho -->
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Distribución <span>Abril ref.</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">Ecog. Obs.</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--blue)"></div></div><div class="bval" style="width:28px">336</div></div>
+            <div class="brow"><div class="blbl">Scan Fetal</div><div class="btrack"><div class="bfill" style="width:28%;background:var(--teal)"></div></div><div class="bval" style="width:28px">95</div></div>
+            <div class="brow"><div class="blbl">Doppler</div><div class="btrack"><div class="bfill" style="width:26%;background:var(--purple)"></div></div><div class="bval" style="width:28px">88</div></div>
+            <div class="brow"><div class="blbl">TN</div><div class="btrack"><div class="bfill" style="width:9%;background:var(--green)"></div></div><div class="bval" style="width:28px">31</div></div>
+            <div class="brow"><div class="blbl">Gineco</div><div class="btrack"><div class="bfill" style="width:7%;background:var(--amber)"></div></div><div class="bval" style="width:28px">25</div></div>
+            <div class="brow"><div class="blbl">Otros</div><div class="btrack"><div class="bfill" style="width:3%;background:var(--muted)"></div></div><div class="bval" style="width:28px">13</div></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Estado <span>carga</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+            <div style="background:var(--amber-d);border-radius:7px;padding:8px 10px;border-left:2px solid var(--amber)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Solapa creada · sin datos</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">Secretaría puede empezar a cargar</div>
+            </div>
+            <div style="background:var(--blue-d);border-radius:7px;padding:8px 10px;border-left:2px solid var(--blue)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Referencia disponible</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">Abril 2026 · 585 procedimientos</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="view" id="view-hospdia">
+
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Pacientes hoy</div>
+        <div class="kpi-val">14</div>
+        <div class="kpi-note">26/05</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Ecografías</div>
+        <div class="kpi-val" style="color:var(--red)">0</div>
+        <div class="kpi-note down">Sin ecografista</div>
+      </div>
+      <div class="kpi c-green">
+        <div class="kpi-lbl">NST</div>
+        <div class="kpi-val">9</div>
+        <div class="kpi-note up">realizados</div>
+      </div>
+      <div class="kpi c-purple">
+        <div class="kpi-lbl">Turnos quirúrgicos</div>
+        <div class="kpi-val">4</div>
+        <div class="kpi-note">hoy</div>
+      </div>
+      <div class="kpi c-amber">
+        <div class="kpi-lbl">Internadas ARO</div>
+        <div class="kpi-val">1</div>
+        <div class="kpi-note warn">→ ARO</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 200px;gap:10px;flex:1;min-height:0">
+
+      <!-- Tabla principal -->
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Registro diario · Hospital de Día <span>6° piso</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th class="r">Total pac.</th>
+                <th class="r">Ecografías</th>
+                <th class="r">NST</th>
+                <th class="r">Intern. ARO</th>
+                <th class="r">T. quirúrg.</th>
+                <th class="r">Cont. consult.</th>
+                <th>Proveniente</th>
+                <th>Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono muted">26/05</td>
+                <td class="mono r">14</td>
+                <td class="mono r" style="color:var(--red)">0</td>
+                <td class="mono r">9</td>
+                <td class="mono r">1</td>
+                <td class="mono r">4</td>
+                <td class="mono r">3</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--amber)">S/ médico eco · 2 inducción</td>
+              </tr>
+              <tr>
+                <td class="mono muted">22/05</td>
+                <td class="mono r">20</td>
+                <td class="mono r">6</td>
+                <td class="mono r">6</td>
+                <td class="mono r">1</td>
+                <td class="mono r">8</td>
+                <td class="mono r">0</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--muted)">1 inducc · DRV Padua</td>
+              </tr>
+              <tr>
+                <td class="mono muted">21/05</td>
+                <td class="mono r">14</td>
+                <td class="mono r">7</td>
+                <td class="mono r">5</td>
+                <td class="mono r">0</td>
+                <td class="mono r">2</td>
+                <td class="mono r">0</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--muted)">2 inducciones</td>
+              </tr>
+              <tr>
+                <td class="mono muted">20/05</td>
+                <td class="mono r">15</td>
+                <td class="mono r">4</td>
+                <td class="mono r">9</td>
+                <td class="mono r">0</td>
+                <td class="mono r">1</td>
+                <td class="mono r">2</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--muted)">—</td>
+              </tr>
+              <tr>
+                <td class="mono muted">19/05</td>
+                <td class="mono r">15</td>
+                <td class="mono r" style="color:var(--red)">0</td>
+                <td class="mono r">10</td>
+                <td class="mono r">2</td>
+                <td class="mono r">4</td>
+                <td class="mono r">2</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--amber)">S/ médico eco · DRV Morón</td>
+              </tr>
+              <tr>
+                <td class="mono muted">18/05</td>
+                <td class="mono r">19</td>
+                <td class="mono r" style="color:var(--red)">0</td>
+                <td class="mono r">11</td>
+                <td class="mono r">1</td>
+                <td class="mono r">8</td>
+                <td class="mono r">0</td>
+                <td style="font-size:9.5px;color:var(--muted2)">—</td>
+                <td style="font-size:9px;color:var(--amber)">S/ médico eco · DRV Morón</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel derecho -->
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Semana <span>18–26/05</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">Pacientes</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--blue)"></div></div><div class="bval" style="width:28px">96</div></div>
+            <div class="brow"><div class="blbl">NST</div><div class="btrack"><div class="bfill" style="width:80%;background:var(--green)"></div></div><div class="bval" style="width:28px">50</div></div>
+            <div class="brow"><div class="blbl">Ecografías</div><div class="btrack"><div class="bfill" style="width:85%;background:var(--teal)"></div></div><div class="bval" style="width:28px">17</div></div>
+            <div class="brow"><div class="blbl">T. quirúrg.</div><div class="btrack"><div class="bfill" style="width:60%;background:var(--purple)"></div></div><div class="bval" style="width:28px">27</div></div>
+            <div class="brow"><div class="blbl">→ ARO</div><div class="btrack"><div class="bfill" style="width:25%;background:var(--amber)"></div></div><div class="bval" style="width:28px">5</div></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Alertas <span>cobertura</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
+            <div style="background:var(--red-d);border-radius:7px;padding:8px 10px;border-left:2px solid var(--red)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Sin ecografista hoy</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">3° día en la semana · 26/05</div>
+            </div>
+            <div style="background:var(--amber-d);border-radius:7px;padding:8px 10px;border-left:2px solid var(--amber)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Días sin eco: 18, 19, 26/05</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">Derivaciones: Morón × 2, Padua × 1</div>
+            </div>
+            <div style="background:var(--blue-d);border-radius:7px;padding:8px 10px;border-left:2px solid var(--blue)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">2 inducciones programadas hoy</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:2px">Seguimiento en curso</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="view" id="view-consultorio">
+
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi c-blue">
+        <div class="kpi-lbl">Disponibles hoy</div>
+        <div class="kpi-val">69</div>
+        <div class="kpi-note">26/05 · martes</div>
+      </div>
+      <div class="kpi c-teal">
+        <div class="kpi-lbl">Asignados</div>
+        <div class="kpi-val">60</div>
+        <div class="kpi-note muted">de 69</div>
+      </div>
+      <div class="kpi c-green">
+        <div class="kpi-lbl">Atendidos</div>
+        <div class="kpi-val">52</div>
+        <div class="kpi-note up">87% presencia</div>
+      </div>
+      <div class="kpi c-amber sem-yellow">
+        <div class="sem-dot yellow"></div>
+        <div class="kpi-lbl">Ausentismo hoy</div>
+        <div class="kpi-val">13<sup>%</sup></div>
+        <div class="kpi-note warn">8 inasistencias</div>
+      </div>
+      <div class="kpi c-red sem-red">
+        <div class="sem-dot red"></div>
+        <div class="kpi-lbl">Ausentismo mes</div>
+        <div class="kpi-val">22<sup>%</sup></div>
+        <div class="kpi-note down">↑ meta &lt;15%</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 210px;gap:10px;flex:1;min-height:0">
+
+      <!-- Tabla -->
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Registro Consultorio PB <span>mayo 2026</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Día</th>
+                <th class="r">Disponibles</th>
+                <th class="r">Asignados</th>
+                <th class="r">Atendidos</th>
+                <th class="r">Ausentismo</th>
+                <th>Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono muted">26/05</td>
+                <td style="font-size:10px">Martes</td>
+                <td class="mono r">69</td>
+                <td class="mono r">60</td>
+                <td class="mono r">52</td>
+                <td class="mono r" style="color:var(--amber)">13%</td>
+                <td style="font-size:9px;color:var(--muted)">Jaime (AR) artículo</td>
+              </tr>
+              <tr>
+                <td class="mono muted">22/05</td>
+                <td style="font-size:10px">Viernes</td>
+                <td class="mono r">72</td>
+                <td class="mono r">72</td>
+                <td class="mono r">60</td>
+                <td class="mono r" style="color:var(--amber)">17%</td>
+                <td style="font-size:9px;color:var(--muted)">—</td>
+              </tr>
+              <tr>
+                <td class="mono muted">21/05</td>
+                <td style="font-size:10px">Jueves</td>
+                <td class="mono r">85</td>
+                <td class="mono r">89</td>
+                <td class="mono r">69</td>
+                <td class="mono r" style="color:var(--amber)">22%</td>
+                <td style="font-size:9px;color:var(--muted)">Pico semanal</td>
+              </tr>
+              <tr>
+                <td class="mono muted">20/05</td>
+                <td style="font-size:10px">Miércoles</td>
+                <td class="mono r">81</td>
+                <td class="mono r">55</td>
+                <td class="mono r">45</td>
+                <td class="mono r" style="color:var(--red)">18%</td>
+                <td style="font-size:9px;color:var(--red)">Paro residentes</td>
+              </tr>
+              <tr>
+                <td class="mono muted">19/05</td>
+                <td style="font-size:10px">Martes</td>
+                <td class="mono r">81</td>
+                <td class="mono r">65</td>
+                <td class="mono r">52</td>
+                <td class="mono r" style="color:var(--amber)">20%</td>
+                <td style="font-size:9px;color:var(--muted)">—</td>
+              </tr>
+              <tr>
+                <td class="mono muted">18/05</td>
+                <td style="font-size:10px">Lunes</td>
+                <td class="mono r">77</td>
+                <td class="mono r">87</td>
+                <td class="mono r">61</td>
+                <td class="mono r" style="color:var(--red)">30%</td>
+                <td style="font-size:9px;color:var(--muted)">Nuevos consult. desde 15/05</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Panel derecho -->
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Semana <span>18–26/05</span></div>
+          <div class="occ-rows" style="gap:7px;margin-top:4px">
+            <div class="occ-row">
+              <div class="occ-top"><span>Total asignados</span><span>428</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:100%;background:var(--blue)"></div></div>
+            </div>
+            <div class="occ-row">
+              <div class="occ-top"><span>Total atendidos</span><span>339</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:79%;background:var(--green)"></div></div>
+            </div>
+            <div class="occ-row">
+              <div class="occ-top"><span>Ausentismo prom.</span><span style="color:var(--red)">21%</span></div>
+              <div class="occ-track"><div class="occ-fill" style="width:21%;background:var(--red)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Ausentismo <span>tendencia</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">26/05</div><div class="btrack"><div class="bfill" style="width:13%;background:var(--amber)"></div></div><div class="bval">13%</div></div>
+            <div class="brow"><div class="blbl">22/05</div><div class="btrack"><div class="bfill" style="width:17%;background:var(--amber)"></div></div><div class="bval">17%</div></div>
+            <div class="brow"><div class="blbl">21/05</div><div class="btrack"><div class="bfill" style="width:22%;background:var(--amber)"></div></div><div class="bval">22%</div></div>
+            <div class="brow"><div class="blbl">20/05</div><div class="btrack"><div class="bfill" style="width:18%;background:var(--red)"></div></div><div class="bval">18%</div></div>
+            <div class="brow"><div class="blbl">19/05</div><div class="btrack"><div class="bfill" style="width:20%;background:var(--amber)"></div></div><div class="bval">20%</div></div>
+            <div class="brow"><div class="blbl">18/05</div><div class="btrack"><div class="bfill" style="width:30%;background:var(--red)"></div></div><div class="bval">30%</div></div>
+          </div>
+          <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:9.5px">
+            <span style="color:var(--muted)">Meta &lt;15%</span>
+            <span style="font-family:'IBM Plex Mono',monospace;color:var(--red)">⚑ zona roja</span>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Eventos <span>semana</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+            <div style="background:var(--red-d);border-radius:7px;padding:7px 9px;border-left:2px solid var(--red)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Paro residentes 20/05</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:1px">Caída a 45 atendidos</div>
+            </div>
+            <div style="background:var(--blue-d);border-radius:7px;padding:7px 9px;border-left:2px solid var(--blue)">
+              <div style="font-size:9.5px;color:var(--text);font-weight:600">Nuevos consultorios desde 15/05</div>
+              <div style="font-size:9px;color:var(--muted);margin-top:1px">Aumento de demanda sostenido</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ VISTA SIP ESTADÍSTICA ══════════ -->
+  <div class="view" id="view-sip-estadistica">
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi c-blue"><div class="kpi-lbl">Total nacimientos 2025</div><div class="kpi-val">2.201</div><div class="kpi-note">vs 2.226 en 2024</div></div>
+      <div class="kpi c-amber sem-red"><div class="sem-dot red"></div><div class="kpi-lbl">Tasa cesáreas 2025</div><div class="kpi-val">58.4<sup>%</sup></div><div class="kpi-note warn">meta &lt;52%</div></div>
+      <div class="kpi c-purple"><div class="kpi-lbl">Pretérmino 2025</div><div class="kpi-val">19.5<sup>%</sup></div><div class="kpi-note">422/2164 RN vivos</div></div>
+      <div class="kpi c-red"><div class="kpi-lbl">Mortalidad fetal 2025</div><div class="kpi-val">1.7<sup>%</sup></div><div class="kpi-note">38 casos · anual</div></div>
+      <div class="kpi c-green"><div class="kpi-lbl">Lactancia exclusiva alta</div><div class="kpi-val">91.5<sup>%</sup></div><div class="kpi-note">términos · 2025</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0">
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Nacimientos por mes <span>2025 · total RN</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead><tr><th>Mes</th><th class="r">Vaginales</th><th class="r">Cesáreas</th><th class="r">Total</th><th class="r">Tasa C%</th><th class="r">Pretérmino</th></tr></thead>
+            <tbody>
+              <tr><td>Enero</td><td class="mono r">67</td><td class="mono r">110</td><td class="mono r">184</td><td class="mono r" style="color:var(--red)">62%</td><td class="mono r">19%</td></tr>
+              <tr><td>Febrero</td><td class="mono r">66</td><td class="mono r">100</td><td class="mono r">170</td><td class="mono r" style="color:var(--red)">60%</td><td class="mono r">17%</td></tr>
+              <tr><td>Marzo</td><td class="mono r">69</td><td class="mono r">99</td><td class="mono r">172</td><td class="mono r" style="color:var(--red)">59%</td><td class="mono r">16%</td></tr>
+              <tr><td>Abril</td><td class="mono r">81</td><td class="mono r">108</td><td class="mono r">195</td><td class="mono r" style="color:var(--amber)">57%</td><td class="mono r">21%</td></tr>
+              <tr><td>Mayo</td><td class="mono r">89</td><td class="mono r">126</td><td class="mono r">222</td><td class="mono r" style="color:var(--amber)">57%</td><td class="mono r">22%</td></tr>
+              <tr><td>Junio</td><td class="mono r">84</td><td class="mono r">106</td><td class="mono r">192</td><td class="mono r" style="color:var(--amber)">56%</td><td class="mono r">21%</td></tr>
+              <tr><td>Julio</td><td class="mono r">89</td><td class="mono r">115</td><td class="mono r">209</td><td class="mono r" style="color:var(--amber)">56%</td><td class="mono r">17%</td></tr>
+              <tr><td>Agosto</td><td class="mono r">71</td><td class="mono r">118</td><td class="mono r">196</td><td class="mono r" style="color:var(--red)">62%</td><td class="mono r">19%</td></tr>
+              <tr><td>Septiembre</td><td class="mono r">60</td><td class="mono r">80</td><td class="mono r">141</td><td class="mono r" style="color:var(--amber)">57%</td><td class="mono r">15%</td></tr>
+              <tr><td>Octubre</td><td class="mono r">90</td><td class="mono r">97</td><td class="mono r">195</td><td class="mono r" style="color:var(--amber)">52%</td><td class="mono r">20%</td></tr>
+              <tr><td>Noviembre</td><td class="mono r">57</td><td class="mono r">96</td><td class="mono r">161</td><td class="mono r" style="color:var(--red)">63%</td><td class="mono r">19%</td></tr>
+              <tr><td>Diciembre</td><td class="mono r">68</td><td class="mono r">91</td><td class="mono r">164</td><td class="mono r" style="color:var(--amber)">57%</td><td class="mono r">27%</td></tr>
+              <tr style="border-top:1px solid var(--border2)"><td style="font-weight:600">Total</td><td class="mono r" style="color:var(--green)">891</td><td class="mono r" style="color:var(--red)">1.246</td><td class="mono r" style="font-weight:600">2.201</td><td class="mono r" style="color:var(--red)">58.4%</td><td class="mono r">19.5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Neonatología <span>2025 · anual</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">Pretérmino</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--purple)"></div></div><div class="bval" style="width:36px">19.5%</div></div>
+            <div class="brow"><div class="blbl">&lt;2500g</div><div class="btrack"><div class="bfill" style="width:74%;background:var(--amber)"></div></div><div class="bval" style="width:36px">14.4%</div></div>
+            <div class="brow"><div class="blbl">&lt;1500g</div><div class="btrack"><div class="bfill" style="width:18%;background:var(--red)"></div></div><div class="bval" style="width:36px">3.5%</div></div>
+            <div class="brow"><div class="blbl">Ingreso UTIN</div><div class="btrack"><div class="bfill" style="width:95%;background:var(--blue)"></div></div><div class="bval" style="width:36px">18.5%</div></div>
+            <div class="brow"><div class="blbl">Def. congénitos</div><div class="btrack"><div class="bfill" style="width:28%;background:var(--teal)"></div></div><div class="bval" style="width:36px">5.5%</div></div>
+          </div>
+        </div>
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Abortos / IVE <span>2025 · anual</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+            <div style="display:flex;justify-content:space-between;font-size:10.5px"><span style="color:var(--muted2)">FM &lt;22 sem / AB espontáneo</span><span style="font-family:'IBM Plex Mono',monospace">31</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px"><span style="color:var(--muted2)">ILE/IVE con internación</span><span style="font-family:'IBM Plex Mono',monospace">35</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px"><span style="color:var(--muted2)">ILE mayor 22 sem</span><span style="font-family:'IBM Plex Mono',monospace">7</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px;padding-top:5px;border-top:1px solid var(--border)"><span style="color:var(--text);font-weight:600">Total</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--amber)">73</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA SIP TABLERO GESTIÓN ══════════ -->
+  <div class="view" id="view-sip-gestion">
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi c-red sem-red"><div class="sem-dot red"></div><div class="kpi-lbl">Tasa cesáreas anual</div><div class="kpi-val">58.4<sup>%</sup></div><div class="kpi-note warn">meta 57% · ↑ tendencia</div></div>
+      <div class="kpi c-amber"><div class="kpi-lbl">ISQ post cesárea</div><div class="kpi-val">4.3<sup>%</sup></div><div class="kpi-note warn">meta &lt;5% · zona amarilla</div></div>
+      <div class="kpi c-blue"><div class="kpi-lbl">Near miss</div><div class="kpi-val">1.9<sup>%</sup></div><div class="kpi-note">seguimiento trimestral</div></div>
+      <div class="kpi c-green"><div class="kpi-lbl">Hora de oro</div><div class="kpi-val">57.9<sup>%</sup></div><div class="kpi-note up">↑ vs 67% en 2024</div></div>
+      <div class="kpi c-purple"><div class="kpi-lbl">Implante subdérmico</div><div class="kpi-val">18.2<sup>%</sup></div><div class="kpi-note up">↑ tendencia sostenida</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;flex:1;min-height:0">
+      <div class="card" style="padding:12px 13px">
+        <div class="ctitle">Tasa cesáreas <span>tendencia histórica</span></div>
+        <div class="barchart" style="gap:7px;margin-top:4px">
+          <div class="brow"><div class="blbl">2019</div><div class="btrack"><div class="bfill" style="width:75%;background:var(--green)"></div></div><div class="bval">46.6%</div></div>
+          <div class="brow"><div class="blbl">2020</div><div class="btrack"><div class="bfill" style="width:82%;background:var(--green)"></div></div><div class="bval">51.2%</div></div>
+          <div class="brow"><div class="blbl">2021</div><div class="btrack"><div class="bfill" style="width:85%;background:var(--amber)"></div></div><div class="bval">52.8%</div></div>
+          <div class="brow"><div class="blbl">2022</div><div class="btrack"><div class="bfill" style="width:88%;background:var(--amber)"></div></div><div class="bval">54.7%</div></div>
+          <div class="brow"><div class="blbl">2023</div><div class="btrack"><div class="bfill" style="width:95%;background:var(--red)"></div></div><div class="bval">59.2%</div></div>
+          <div class="brow"><div class="blbl">2024</div><div class="btrack"><div class="bfill" style="width:97%;background:var(--red)"></div></div><div class="bval">60.4%</div></div>
+          <div class="brow"><div class="blbl" style="color:var(--text);font-weight:600">2025</div><div class="btrack"><div class="bfill" style="width:94%;background:var(--red)"></div></div><div class="bval" style="color:var(--red)">58.4%</div></div>
+        </div>
+        <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);font-size:9px;color:var(--muted)">Meta institucional: &lt;57% · primera mejora desde 2020</div>
+      </div>
+      <div class="card" style="padding:12px 13px">
+        <div class="ctitle">Indicadores parto <span>2025 anual</span></div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Ces. inicio espontáneo</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber)">28.7%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Ces. Grupo 1 Robson</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red)">25.0%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Vaginal en inducciones</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber)">53.6%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Acomp. en quirófano</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green)">90.1%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Posición de parto</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green)">10.6%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--muted2)">Episiotomía primíparas</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px">32.3%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding:12px 13px">
+        <div class="ctitle">AIPE <span>2025 anual</span></div>
+        <div class="barchart" style="gap:6px;margin-top:4px">
+          <div class="brow"><div class="blbl">Ligadura</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--blue)"></div></div><div class="bval">34.3%</div></div>
+          <div class="brow"><div class="blbl">Implante</div><div class="btrack"><div class="bfill" style="width:53%;background:var(--green)"></div></div><div class="bval">18.2%</div></div>
+          <div class="brow"><div class="blbl">ACO/iny.</div><div class="btrack"><div class="bfill" style="width:96%;background:var(--purple)"></div></div><div class="bval">33.0%</div></div>
+          <div class="brow"><div class="blbl">DIU/SIU</div><div class="btrack"><div class="bfill" style="width:23%;background:var(--teal)"></div></div><div class="bval">7.8%</div></div>
+          <div class="brow"><div class="blbl">Barrera</div><div class="btrack"><div class="bfill" style="width:20%;background:var(--amber)"></div></div><div class="bval">7.0%</div></div>
+        </div>
+        <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);font-size:9px;color:var(--muted)">Implante: ↑ de 1.8% (2019) a 18.2% (2025)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA SIP INDICADORES ══════════ -->
+  <div class="view" id="view-sip-indicadores">
+    <div class="kpis kpis-6" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi c-teal"><div class="kpi-lbl">Alto riesgo 2025</div><div class="kpi-val">54.9<sup>%</sup></div><div class="kpi-note">de total pacientes</div></div>
+      <div class="kpi c-amber"><div class="kpi-lbl">Trastornos hipertensivos</div><div class="kpi-val">15.9<sup>%</sup></div><div class="kpi-note">del total asistidas</div></div>
+      <div class="kpi c-blue"><div class="kpi-lbl">Diabetes mellitus</div><div class="kpi-val">13.5<sup>%</sup></div><div class="kpi-note">del total asistidas</div></div>
+      <div class="kpi c-purple"><div class="kpi-lbl">Sífilis gestacional</div><div class="kpi-val">5.8<sup>%</sup></div><div class="kpi-note">del total asistidas</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0">
+      <div class="card" style="padding:12px 14px;min-height:0">
+        <div class="ctitle">Indicadores SIP por trimestre <span>2025</span></div>
+        <div class="co-table-wrap">
+          <table class="mtable">
+            <thead><tr><th>Indicador</th><th class="r">1er T</th><th class="r">2do T</th><th class="r">3er T</th><th class="r">4to T</th><th class="r">Anual</th></tr></thead>
+            <tbody>
+              <tr><td style="font-size:9.5px">Tasa cesáreas</td><td class="mono r" style="color:var(--red)">60.4%</td><td class="mono r" style="color:var(--amber)">57.2%</td><td class="mono r" style="color:var(--amber)">58.6%</td><td class="mono r" style="color:var(--amber)">57.5%</td><td class="mono r" style="color:var(--red)">58.4%</td></tr>
+              <tr><td style="font-size:9.5px">Ces. inicio espontáneo</td><td class="mono r">29.0%</td><td class="mono r">28.7%</td><td class="mono r">27.6%</td><td class="mono r">29.4%</td><td class="mono r">28.7%</td></tr>
+              <tr><td style="font-size:9.5px">Ces. G1 Robson</td><td class="mono r" style="color:var(--red)">36.4%</td><td class="mono r">23.4%</td><td class="mono r">24.1%</td><td class="mono r">16.3%</td><td class="mono r">25.0%</td></tr>
+              <tr><td style="font-size:9.5px">Vaginal en inducciones</td><td class="mono r">44.9%</td><td class="mono r">50.9%</td><td class="mono r">54.4%</td><td class="mono r" style="color:var(--green)">60.7%</td><td class="mono r">53.6%</td></tr>
+              <tr><td style="font-size:9.5px">Acomp. quirófano</td><td class="mono r">88.1%</td><td class="mono r">90.9%</td><td class="mono r">88.8%</td><td class="mono r" style="color:var(--green)">93.7%</td><td class="mono r">90.1%</td></tr>
+              <tr><td style="font-size:9.5px">Hora de oro</td><td class="mono r">60.2%</td><td class="mono r">62.2%</td><td class="mono r">55.0%</td><td class="mono r">54.0%</td><td class="mono r">57.9%</td></tr>
+              <tr><td style="font-size:9.5px">ISQ post cesárea</td><td class="mono r" style="color:var(--red)">7.1%</td><td class="mono r">3.9%</td><td class="mono r">3.6%</td><td class="mono r" style="color:var(--green)">2.4%</td><td class="mono r" style="color:var(--amber)">4.3%</td></tr>
+              <tr><td style="font-size:9.5px">Near miss</td><td class="mono r">2.1%</td><td class="mono r">1.8%</td><td class="mono r">1.9%</td><td class="mono r">1.9%</td><td class="mono r">1.9%</td></tr>
+              <tr><td style="font-size:9.5px">Pretérmino</td><td class="mono r">19.0%</td><td class="mono r">21.6%</td><td class="mono r">17.2%</td><td class="mono r">20.3%</td><td class="mono r">19.5%</td></tr>
+              <tr><td style="font-size:9.5px">Ingreso UTIN</td><td class="mono r">18.8%</td><td class="mono r">18.8%</td><td class="mono r">17.9%</td><td class="mono r">17.1%</td><td class="mono r">18.5%</td></tr>
+              <tr><td style="font-size:9.5px">Lactancia exclusiva alta</td><td class="mono r">91.5%</td><td class="mono r">93.3%</td><td class="mono r">93.4%</td><td class="mono r">90.6%</td><td class="mono r">91.5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Morbilidad materna <span>2025 anual</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--muted2)">Muertes maternas</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--green)">0</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--muted2)">Mortalidad fetal ≥22 sem</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--amber)">38 (1.7%)</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--muted2)">Near miss</span><span style="font-family:'IBM Plex Mono',monospace">1.9%</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--muted2)">Endometritis post parto</span><span style="font-family:'IBM Plex Mono',monospace">11 (1.2%)</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--muted2)">ISQ post cesárea</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--amber)">53 (4.3%)</span></div>
+          </div>
+        </div>
+        <div class="card" style="padding:12px 13px">
+          <div class="ctitle">Patología materna <span>2025 anual</span></div>
+          <div class="barchart" style="gap:6px;margin-top:4px">
+            <div class="brow"><div class="blbl">Alto riesgo</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--purple)"></div></div><div class="bval">54.9%</div></div>
+            <div class="brow"><div class="blbl">HTA/trastornos</div><div class="btrack"><div class="bfill" style="width:29%;background:var(--red)"></div></div><div class="bval">15.9%</div></div>
+            <div class="brow"><div class="blbl">Diabetes</div><div class="btrack"><div class="bfill" style="width:25%;background:var(--amber)"></div></div><div class="bval">13.5%</div></div>
+            <div class="brow"><div class="blbl">Sífilis</div><div class="btrack"><div class="bfill" style="width:11%;background:var(--teal)"></div></div><div class="bval">5.8%</div></div>
+            <div class="brow"><div class="blbl">CPN en Posadas</div><div class="btrack"><div class="bfill" style="width:97%;background:var(--blue)"></div></div><div class="bval">53.4%</div></div>
+          </div>
+        </div>
+        <div class="card" style="padding:12px 13px;flex:1">
+          <div class="ctitle">Fuente <span>SIP 2025</span></div>
+          <div style="font-size:9.5px;color:var(--muted);line-height:1.6;margin-top:4px">
+            Datos del Sistema Informático Perinatal · Año 2025 completo<br>
+            Total pacientes asistidas: <span style="font-family:'IBM Plex Mono',monospace;color:var(--text)">2.206</span><br>
+            Total nacimientos: <span style="font-family:'IBM Plex Mono',monospace;color:var(--text)">2.201</span><br>
+            Actualización: <span style="font-family:'IBM Plex Mono',monospace;color:var(--text)">anual · 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- SIDEBAR DER -->
+<aside class="sr">
+  <div>
+    <div class="sr-title">Alertas activas</div>
+    <div class="alerts">
+      <div class="alert crit"><div class="alert-msg">Tasa cesáreas 57.7% · meta &lt;52%</div><div class="alert-ts">Mayo 2026</div></div>
+      <div class="alert crit"><div class="alert-msg">ARO al 73% · 8/11 camas · margen mínimo</div><div class="alert-ts">26/05 11:15</div></div>
+      <div class="alert warn"><div class="alert-msg">Puerperio 8 camas prestadas</div><div class="alert-ts">26/05 11:21</div></div>
+      <div class="alert warn"><div class="alert-msg">CEEPYP sin ecografista 26/05</div><div class="alert-ts">Hoy</div></div>
+      <div class="alert info"><div class="alert-msg">14 infecciones mayo · 5 herida quirúrgica</div><div class="alert-ts">Acumulado mes</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="sr-title">Infecciones · mayo</div>
+    <div class="inf-list" id="inf-list">
+      <div class="inf-row"><span>Endometritis</span><span id="inf-endometritis">—</span></div>
+      <div class="inf-row"><span>Inf. herida quirúrgica</span><span id="inf-herida" style="color:var(--amber)">—</span></div>
+      <div class="inf-row"><span>Inf. ambulatorias</span><span id="inf-ambulatorias">—</span></div>
+      <div class="inf-row"><span>Inf. raspado</span><span id="inf-raspado">—</span></div>
+      <div class="inf-row"><span>Laparotomías</span><span id="inf-laparotomias">—</span></div>
+      <div class="inf-row" style="margin-top:4px;padding-top:5px;border-top:1px solid var(--border2)">
+        <span style="font-size:9px;color:var(--muted)">Intrahospitalarias</span>
+        <span id="inf-intra" style="font-family:'IBM Plex Mono',monospace;font-size:10px">—</span>
+      </div>
+      <div class="inf-row total" style="margin-top:4px;padding-top:6px;border-top:1px solid var(--border2)">
+        <span>Total</span><span id="inf-total" style="color:var(--amber)">—</span>
+      </div>
+      <div style="margin-top:4px;font-size:9px;color:var(--muted)">
+        Tasa ISQ: <span id="inf-tasa-isq" style="color:var(--amber);font-family:'IBM Plex Mono',monospace">—</span> · meta &lt;5%
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="sr-title">Derivaciones · mayo</div>
+    <div id="derivaciones-list" style="display:flex;flex-direction:column;gap:6px">
+      <div style="text-align:center;font-size:9.5px;color:var(--muted);padding:8px 0">Cargando...</div>
+    </div>
+  </div>
+</aside>
+
+</div>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxO-CsdJ-mFQumU3MkcDJuJProc8C2KQ8W3fwJWS7zxe98end-IXz8vuSgV0RkV-CSm/exec';
+
+// Sidebar período
+function setSLRango(el, tipo) {
+  document.querySelectorAll('#sl-hoy,#sl-semana,#sl-mes,#sl-custom').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  const btnMap = {hoy:0, semana:1, mes:2};
+  const btns = document.querySelectorAll('.dr-btn');
+  btns.forEach(b=>b.classList.remove('on'));
+  if(btnMap[tipo]!==undefined) btns[btnMap[tipo]].classList.add('on');
+  const n=new Date(); n.setHours(0,0,0,0);
+  if(tipo==='hoy'){rangoDesde=new Date(n);rangoHasta=new Date(n);}
+  else if(tipo==='semana'){const l=new Date(n);l.setDate(n.getDate()-n.getDay()+1);rangoDesde=l;rangoHasta=new Date(n);}
+  else if(tipo==='mes'){rangoDesde=new Date(n.getFullYear(),n.getMonth(),1);rangoHasta=new Date(n);}
+  loadResumen();
+  if(document.getElementById('view-co').classList.contains('active')) loadCO();
+}
+
+function setSLRangoCustom(el) {
+  document.querySelectorAll('#sl-hoy,#sl-semana,#sl-mes,#sl-custom').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('dr-from').focus();
+}
+
+// Dropdowns con click para iPad touch
+function toggleDrop(el, e) {
+  e.stopPropagation();
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.tab.drop').forEach(d=>d.classList.remove('open'));
+  if(!isOpen) el.classList.add('open');
+}
+document.addEventListener('click', ()=>{
+  document.querySelectorAll('.tab.drop').forEach(d=>d.classList.remove('open'));
+});
+
+// Recarga la vista activa
+function recargarVista() {
+  const btn = document.getElementById('btn-reload');
+  if(btn) { btn.textContent='↻ Actualizando...'; btn.style.color='var(--blue)'; }
+  const vistas = ['resumen','co','aro','puerperio','ceepyp','hospdia','consultorio','sip-estadistica','sip-gestion','sip-indicadores'];
+  const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active'));
+  const loaderMap = {resumen:loadResumen, co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio};
+  const fn = loaderMap[activa];
+  if(fn) {
+    fn().finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
+  } else {
+    if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';}
+  }
+}
+function updateTS() {
+  const n = new Date();
+  const d = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][n.getDay()];
+  const f = String(n.getDate()).padStart(2,'0')+'/'+String(n.getMonth()+1).padStart(2,'0');
+  const h = String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('live-ts').textContent = d+' '+f+' · '+h;
+}
+updateTS(); setInterval(updateTS,30000);
+
+// ── NAVEGACIÓN ─────────────────────────────────────────
+function showView(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tab:not(.drop)').forEach(t => t.classList.remove('on'));
+  if (tabEl) tabEl.classList.add('on');
+  const loaders = {co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio, 'sip-estadistica':()=>{}, 'sip-gestion':()=>{}, 'sip-indicadores':()=>{}};
+  if (loaders[name]) loaders[name]();
+}
+
+// ── HELPERS ────────────────────────────────────────────
+async function fetchSheet(sheet) {
+  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet));
+  return res.json();
+}
+
+function parseFecha(f) {
+  if (!f||f.trim()==="") return null;
+  const s=f.trim().replace(/\s/g,"");
+  const parts=s.split("/");
+  if(parts.length<2) return null;
+  let d=parseInt(parts[0]),m=parseInt(parts[1]),y;
+  if(parts.length>=3){y=parseInt(parts[2]);if(y<100)y+=2000;}else{y=new Date().getFullYear();}
+  if(isNaN(d)||isNaN(m)||isNaN(y)) return null;
+  return new Date(y,m-1,d);
+}
+function enRango(fechaRaw,desde,hasta){
+  const f=parseFecha(fechaRaw);
+  if(!f) return false;
+  const fd=new Date(f);fd.setHours(0,0,0,0);
+  const d=new Date(desde);d.setHours(0,0,0,0);
+  const h=new Date(hasta);h.setHours(23,59,59,999);
+  return fd>=d&&fd<=h;
+}
+let rangoDesde=null,rangoHasta=null;
+function initRangoHoy(){const n=new Date();n.setHours(0,0,0,0);rangoDesde=new Date(n);rangoHasta=new Date(n);}
+initRangoHoy();
+function setRangeBtn(btn,tipo){
+  document.querySelectorAll(".dr-btn").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  const n=new Date();n.setHours(0,0,0,0);
+  if(tipo==="hoy"){rangoDesde=new Date(n);rangoHasta=new Date(n);}
+  else if(tipo==="semana"){const l=new Date(n);l.setDate(n.getDate()-n.getDay()+1);rangoDesde=l;rangoHasta=new Date(n);}
+  else if(tipo==="mes"){rangoDesde=new Date(n.getFullYear(),n.getMonth(),1);rangoHasta=new Date(n);}
+  loadResumen();
+}
+function applyRangeCustom(){
+  const from=document.getElementById("dr-from").value;
+  const to=document.getElementById("dr-to").value;
+  if(!from||!to) return;
+  document.querySelectorAll(".dr-btn").forEach(b=>b.classList.remove("on"));
+  rangoDesde=new Date(from);rangoHasta=new Date(to);
+  loadResumen();
+}
+function hoy(){const n=new Date();return String(n.getDate()).padStart(2,"0")+"/"+String(n.getMonth()+1).padStart(2,"0")+"/"+n.getFullYear();}
+function hoyCorto(){const n=new Date();return String(n.getDate()).padStart(2,"0")+"/"+String(n.getMonth()+1).padStart(2,"0");}
+
+function parseHora(h) {
+  if (!h) return '—';
+  if (h.includes('1899') || h.includes('1900')) return '—';
+  return h.replace(/\s*(hs|am|pm|AM|PM|HS)/gi,'').trim() || '—';
+}
+
+function tipoBadge(tipo) {
+  if (!tipo || tipo.trim()==='') return '<span style="color:var(--muted)">—</span>';
+  const t = tipo.toLowerCase();
+  if (t.includes('vaginal'))  return '<span class="tag tag-b">Vaginal</span>';
+  if (t.includes('cesarea')||t.includes('cesárea')) return '<span class="tag tag-a">Cesárea</span>';
+  if (t.includes('forceps')||t.includes('fórceps')) return '<span class="tag tag-p">Fórceps</span>';
+  if (t.includes('sin parto')||t.includes('aro'))   return '<span class="tag tag-p">↑ ARO</span>';
+  return '<span class="tag tag-t">'+tipo+'</span>';
+}
+
+function compBadge(comp, detalle) {
+  if (!comp && !detalle) return '<span style="color:var(--muted)">—</span>';
+  const txt = (detalle || comp).substring(0,20);
+  return '<span class="tag tag-r" style="font-size:8.5px">'+txt+'</span>';
+}
+
+function diasInternada(fechaIngreso) {
+  if (!fechaIngreso) return '—';
+  try {
+    const parts = fechaIngreso.split('/');
+    if (parts.length < 3) return '—';
+    let y = parts[2], m = parts[1], d = parts[0];
+    if (y.length === 2) y = '20'+y;
+    const ingreso = new Date(y, m-1, d);
+    const hoy2 = new Date();
+    const diff = Math.floor((hoy2 - ingreso) / (1000*60*60*24));
+    return diff >= 0 ? diff : '—';
+  } catch(e) { return '—'; }
+}
+
+function diasColor(dias) {
+  if (dias === '—') return '';
+  if (dias > 5) return 'style="color:var(--red)"';
+  if (dias > 2) return 'style="color:var(--amber)"';
+  return '';
+}
+
+function semColor(val, y, r) {
+  if (val > r) return 'red';
+  if (val > y) return 'yellow';
+  return 'green';
+}
+
+// ── VISTA CO ───────────────────────────────────────────
+async function loadCO() {
+  const tbody = document.getElementById('co-tbody');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
+  try {
+    const data = await fetchSheet('Centro Obstetrico');
+    data.sort((a,b)=>{
+      const pa = a.Fecha.split('/').reverse().join(''), pb = b.Fecha.split('/').reverse().join('');
+      return pb.localeCompare(pa);
+    });
+    const h = hoy();
+    const deHoy = data.filter(r => r.Fecha === h);
+    const partos = deHoy.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const cesareas = deHoy.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
+    const vaginales = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
+    const aroHoy = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const tasaCes = partos > 0 ? Math.round(cesareas/partos*100) : 0;
+    document.getElementById('co-total').textContent = partos||'0';
+    const kpis = document.querySelectorAll('#view-co .kpi');
+    if(kpis[1]) { kpis[1].querySelector('.kpi-val').innerHTML=tasaCes+'<sup>%</sup>'; kpis[1].querySelector('.kpi-note').textContent=cesareas+'C / '+vaginales+'V'; }
+    if(kpis[3]) kpis[3].querySelector('.kpi-val').textContent=vaginales;
+    if(kpis[4]) kpis[4].querySelector('.kpi-val').textContent=aroHoy;
+    let html='', lastF='';
+    data.forEach(r=>{
+      if(r.Fecha!==lastF){
+        if(lastF!=='') html+='<tr><td colspan="8" style="font-size:9px;color:var(--muted);padding:5px 0 3px;border-bottom:1px solid var(--border2)">— '+r.Fecha+' —</td></tr>';
+        lastF=r.Fecha;
+      }
+      const esARO=r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto');
+      const peso=(r['RN1 Peso g']||'').replace(/\s*gr?/i,'');
+      html+=`<tr ${esARO?'class="row-aro"':''}>
+        <td class="mono muted">${parseHora(r.Hora)}</td>
+        <td>${tipoBadge(r['Tipo de parto'])}</td>
+        <td style="font-size:9px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r['Indicacion cesarea']||'—'}</td>
+        <td class="mono">${r['RN1 EG sem']?r['RN1 EG sem']+'s':'—'}</td>
+        <td class="mono">${peso?peso+'g':'—'}</td>
+        <td class="mono">${r['RN1 Apgar']||'—'}</td>
+        <td>${compBadge(r['Comp materna'],r['Detalle comp'])}</td>
+        <td class="mono muted">${r['N HC']||'—'}</td>
+      </tr>`;
+    });
+    tbody.innerHTML=html||'<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted)">Sin datos</td></tr>';
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── VISTA ARO ──────────────────────────────────────────
+async function loadARO() {
+  const tbody = document.querySelector('#view-aro table tbody');
+  if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
+  try {
+    const data = await fetchSheet('ARO');
+    // Última actualización
+    const ultFecha = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso']).pop();
+    const ctitle = document.querySelector('#view-aro .ctitle span');
+    if(ctitle) ctitle.textContent = 'activas · última carga: '+(ultFecha||'—');
+    // Filtrar por rango si no es "hoy" — ARO muestra siempre activas, el rango filtra ingresos
+    const activas = data.filter(r => !r['Fecha Alta'] || r['Fecha Alta'].trim()==='');
+    const desde = rangoDesde, hasta = rangoHasta;
+    const esHoy = desde && hasta && desde.toDateString()===hasta.toDateString()&&desde.toDateString()===new Date().toDateString();
+    const filtradas = esHoy ? activas : activas.filter(r=>enRango(r['Fecha Ingreso'],desde,hasta)||!r['Fecha Ingreso']);
+    const mostrar = filtradas.length > 0 ? filtradas : activas;
+    const kpis = document.querySelectorAll('#view-aro .kpi');
+    if(kpis[0]) { kpis[0].querySelector('.kpi-val').textContent=activas.length; kpis[0].querySelector('.kpi-note').textContent=activas.length+'/11 · ocup.'; }
+    const dias = activas.map(r=>diasInternada(r['Fecha Ingreso'])).filter(d=>d!=='—'&&d>=0&&d<60);
+    const prom = dias.length ? (dias.reduce((a,b)=>a+b,0)/dias.length).toFixed(1) : '—';
+    if(kpis[2]) kpis[2].querySelector('.kpi-val').textContent=prom;
+    let html='';
+    mostrar.forEach(r=>{
+      const dias2 = diasInternada(r['Fecha Ingreso']);
+      const diag1 = (r['Diagnostico 1']||'').substring(0,35);
+      const diag2 = r['Diagnostico 2']||'';
+      const diag3 = r['Diagnostico 3']||'';
+      const dest = r['Destino']||'';
+      let destTag = dest ? (dest.toLowerCase().includes('alta')?'<span class="tag tag-g">Alta</span>':dest.toLowerCase().includes('co')?'<span class="tag tag-a">→ CO</span>':dest.toLowerCase().includes('deriv')?'<span class="tag tag-r">Derivada</span>':'<span class="tag tag-t">'+dest+'</span>') : '<span style="color:var(--muted)">—</span>';
+      html+=`<tr>
+        <td class="mono muted">${r['N HC']||'—'}</td>
+        <td class="mono muted">${r['Fecha Ingreso']||'—'}</td>
+        <td class="mono" ${diasColor(dias2)}>${dias2}</td>
+        <td style="font-size:9px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${diag1||'—'}</td>
+        <td style="font-size:9px">${diag2?'<span class="tag tag-a" style="font-size:8px">'+diag2.substring(0,20)+'</span>':'<span style="color:var(--muted)">—</span>'}</td>
+        <td style="font-size:9px">${diag3?'<span class="tag tag-p" style="font-size:8px">'+diag3.substring(0,20)+'</span>':'<span style="color:var(--muted)">—</span>'}</td>
+        <td>${destTag}</td>
+        <td style="font-size:9px;color:var(--muted)">${(r['Observaciones']||'').substring(0,25)}</td>
+      </tr>`;
+    });
+    tbody.innerHTML=html||'<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted)">Sin pacientes en el período</td></tr>';
+    const diagCount = {};
+    activas.forEach(r=>{
+      ['Diagnostico 1','Diagnostico 2','Diagnostico 3'].forEach(k=>{
+        const v = (r[k]||'').trim();
+        if(v) { const short=v.substring(0,20); diagCount[short]=(diagCount[short]||0)+1; }
+      });
+    });
+    const sorted = Object.entries(diagCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
+    const max = sorted[0]?sorted[0][1]:1;
+    const colors=['var(--blue)','var(--teal)','var(--red)','var(--purple)','var(--amber)','var(--green)'];
+    const barchart = document.querySelector('#view-aro .barchart');
+    if(barchart) {
+      barchart.innerHTML=sorted.map(([k,v],i)=>`
+        <div class="brow"><div class="blbl" style="font-size:9px">${k}</div><div class="btrack"><div class="bfill" style="width:${Math.round(v/max*100)}%;background:${colors[i]}"></div></div><div class="bval">${v}</div></div>
+      `).join('');
+    }
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── VISTA PUERPERIO ────────────────────────────────────
+async function loadPuerperio() {
+  const tbody = document.querySelector('#view-puerperio table tbody');
+  if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
+  try {
+    const data = await fetchSheet('Puerperio');
+    const ultFecha = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso']).pop();
+    const ctitle = document.querySelector('#view-puerperio .ctitle span');
+    if(ctitle) ctitle.textContent = 'activas · última carga: '+(ultFecha||'—');
+    const activas = data.filter(r=>!r['Fecha Alta']||r['Fecha Alta'].trim()==='');
+    const kpis = document.querySelectorAll('#view-puerperio .kpi');
+    if(kpis[0]) kpis[0].querySelector('.kpi-val').textContent=activas.length;
+    const dias = activas.map(r=>diasInternada(r['Fecha Ingreso'])).filter(d=>d!=='—'&&d>=0&&d<30);
+    const prom = dias.length?(dias.reduce((a,b)=>a+b,0)/dias.length).toFixed(1):'—';
+    if(kpis[2]) kpis[2].querySelector('.kpi-val').textContent=prom;
+    const altasHoy = data.filter(r=>{
+      if(!r['Fecha Alta']) return false;
+      const fa = r['Fecha Alta'].trim();
+      return fa===hoy()||fa===hoyCorto()||fa===hoyCorto()+'/26';
+    }).length;
+    if(kpis[3]) kpis[3].querySelector('.kpi-val').textContent=altasHoy;
+    // Filtrar por rango si aplica
+    const desde=rangoDesde, hasta=rangoHasta;
+    const esHoy=desde&&hasta&&desde.toDateString()===hasta.toDateString()&&desde.toDateString()===new Date().toDateString();
+    const mostrar = esHoy ? activas : activas.filter(r=>enRango(r['Fecha Ingreso'],desde,hasta)||!r['Fecha Ingreso']);
+    let html='';
+    (mostrar.length>0?mostrar:activas).sort((a,b)=>{
+      const da=diasInternada(a['Fecha Ingreso']), db=diasInternada(b['Fecha Ingreso']);
+      return (db==='—'?0:db)-(da==='—'?0:da);
+    }).forEach(r=>{
+      const d=diasInternada(r['Fecha Ingreso']);
+      const diag=(r['Diagnostico 1']||'').substring(0,45);
+      const obs=(r['Observaciones']||'').substring(0,20);
+      const isISQ=diag.toLowerCase().includes('post')||diag.toLowerCase().includes('endometritis')||diag.toLowerCase().includes('herida');
+      html+=`<tr ${isISQ?'style="background:rgba(232,85,102,0.04)"':''}>
+        <td class="mono muted">${r['N HC']||'—'}</td>
+        <td class="mono muted">${r['Fecha Ingreso']||'—'}</td>
+        <td class="mono" ${diasColor(d)}>${d}</td>
+        <td style="font-size:9px">${diag||'—'}</td>
+        <td>${r['Fecha Alta']?'<span class="tag tag-g" style="font-size:8px">'+r['Fecha Alta']+'</span>':'<span style="color:var(--muted)">—</span>'}</td>
+        <td style="font-size:9px;color:${isISQ?'var(--red)':'var(--muted)'};">${obs||'—'}</td>
+      </tr>`;
+    });
+    tbody.innerHTML=html||'<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--muted)">Sin pacientes en el período</td></tr>';
+    const internacion = await fetchSheet('Internacion');
+    const puerperio = internacion.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('puerperio')).pop();
+    if(puerperio) {
+      const occ = document.querySelectorAll('#view-puerperio .occ-row');
+      if(occ[0]) { occ[0].querySelector('.occ-top span:last-child').textContent=puerperio['Ocupadas']+' / '+(parseInt(puerperio['Ocupadas']||0)+parseInt(puerperio['Disponibles']||0)); occ[0].querySelector('.occ-fill').style.width=Math.round(puerperio['Ocupadas']/(parseInt(puerperio['Ocupadas']||1)+parseInt(puerperio['Disponibles']||0))*100)+'%'; }
+      if(occ[1]) { occ[1].querySelector('.occ-top span:last-child').textContent=puerperio['Prestadas']; occ[1].querySelector('.occ-fill').style.width=Math.min(parseInt(puerperio['Prestadas']||0)*6,100)+'%'; }
+      if(occ[2]) { occ[2].querySelector('.occ-top span:last-child').textContent=puerperio['Disponibles']; occ[2].querySelector('.occ-fill').style.width=Math.round(puerperio['Disponibles']/(parseInt(puerperio['Ocupadas']||1)+parseInt(puerperio['Disponibles']||0))*100)+'%'; }
+    }
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── VISTA HOSPITAL DE DÍA ──────────────────────────────
+async function loadHospDia() {
+  const tbody = document.querySelector('#view-hospdia table tbody');
+  if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
+  try {
+    const data = await fetchSheet('Hospital de Dia');
+    data.sort((a,b)=>{
+      const fa=parseFecha(a['Fecha']), fb=parseFecha(b['Fecha']);
+      if(!fa||!fb) return 0;
+      return fb-fa;
+    });
+    const ultFecha = data[0]?data[0]['Fecha']:'—';
+    const ctitle = document.querySelector('#view-hospdia .ctitle span');
+    if(ctitle) ctitle.textContent = '6° piso · última carga: '+ultFecha;
+    // Filtrar por rango
+    const desde=rangoDesde, hasta=rangoHasta;
+    const filtrados = data.filter(r=>enRango(r['Fecha'],desde,hasta));
+    const mostrar = filtrados.length>0 ? filtrados : data;
+    const hoyRec = mostrar[0];
+    const kpis = document.querySelectorAll('#view-hospdia .kpi');
+    if(hoyRec&&kpis[0]) {
+      kpis[0].querySelector('.kpi-val').textContent=hoyRec['Total pacientes']||'0';
+      const eco=parseInt(hoyRec['Ecografias']||0);
+      kpis[1].querySelector('.kpi-val').textContent=eco;
+      kpis[1].querySelector('.kpi-val').style.color=eco===0?'var(--red)':'var(--text)';
+      kpis[2].querySelector('.kpi-val').textContent=hoyRec['NST']||'0';
+      kpis[3].querySelector('.kpi-val').textContent=hoyRec['Turnos quirurgicos']||hoyRec['Turnos quirúrgicos']||'0';
+      kpis[4].querySelector('.kpi-val').textContent=hoyRec['Internadas ARO']||'0';
+    }
+    let html='';
+    mostrar.forEach(r=>{
+      const eco=parseInt(r['Ecografias']||0);
+      const obs=(r['Observaciones']||'').substring(0,30);
+      const prov=(r['Proveniente']||'').substring(0,20);
+      html+=`<tr>
+        <td class="mono muted">${r['Fecha']||'—'}</td>
+        <td class="mono r">${r['Total pacientes']||'—'}</td>
+        <td class="mono r" ${eco===0?'style="color:var(--red)"':''}>${eco||'0'}</td>
+        <td class="mono r">${r['NST']||'—'}</td>
+        <td class="mono r">${r['Internadas ARO']||'—'}</td>
+        <td class="mono r">${r['Turnos quirurgicos']||r['Turnos quirúrgicos']||'—'}</td>
+        <td class="mono r">${r['Continuan consultorio']||'—'}</td>
+        <td style="font-size:9.5px;color:var(--muted2)">${prov||'—'}</td>
+        <td style="font-size:9px;color:${obs.toLowerCase().includes('eco')||obs.toLowerCase().includes('drv')?'var(--amber)':'var(--muted)'}">${obs||'—'}</td>
+      </tr>`;
+    });
+    tbody.innerHTML=html||'<tr><td colspan="9" style="text-align:center;padding:16px;color:var(--muted)">Sin datos en el período</td></tr>';
+    const barchart=document.querySelector('#view-hospdia .barchart');
+    if(barchart) {
+      const tot={pac:0,nst:0,eco:0,tq:0,aro:0};
+      mostrar.forEach(r=>{tot.pac+=parseInt(r['Total pacientes']||0);tot.nst+=parseInt(r['NST']||0);tot.eco+=parseInt(r['Ecografias']||0);tot.tq+=parseInt(r['Turnos quirurgicos']||r['Turnos quirúrgicos']||0);tot.aro+=parseInt(r['Internadas ARO']||0);});
+      const mx=Math.max(tot.pac,1);
+      barchart.innerHTML=`
+        <div class="brow"><div class="blbl">Pacientes</div><div class="btrack"><div class="bfill" style="width:100%;background:var(--blue)"></div></div><div class="bval" style="width:28px">${tot.pac}</div></div>
+        <div class="brow"><div class="blbl">NST</div><div class="btrack"><div class="bfill" style="width:${Math.round(tot.nst/mx*100)}%;background:var(--green)"></div></div><div class="bval" style="width:28px">${tot.nst}</div></div>
+        <div class="brow"><div class="blbl">Ecografías</div><div class="btrack"><div class="bfill" style="width:${Math.round(tot.eco/mx*100)}%;background:var(--teal)"></div></div><div class="bval" style="width:28px">${tot.eco}</div></div>
+        <div class="brow"><div class="blbl">T. quirúrg.</div><div class="btrack"><div class="bfill" style="width:${Math.round(tot.tq/mx*100)}%;background:var(--purple)"></div></div><div class="bval" style="width:28px">${tot.tq}</div></div>
+        <div class="brow"><div class="blbl">→ ARO</div><div class="btrack"><div class="bfill" style="width:${Math.round(tot.aro/mx*100)}%;background:var(--amber)"></div></div><div class="bval" style="width:28px">${tot.aro}</div></div>
+      `;
+    }
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── VISTA CONSULTORIO ──────────────────────────────────
+async function loadConsultorio() {
+  const tbody = document.querySelector('#view-consultorio table tbody');
+  if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
+  try {
+    const data = await fetchSheet('Consultorio PB');
+    data.sort((a,b)=>{
+      const fa=parseFecha(a['Fecha']), fb=parseFecha(b['Fecha']);
+      if(!fa||!fb) return 0;
+      return fb-fa;
+    });
+    const ultFecha = data[0]?data[0]['Fecha']:'—';
+    const ctitle = document.querySelector('#view-consultorio .ctitle span');
+    if(ctitle) ctitle.textContent = 'mayo 2026 · última carga: '+ultFecha;
+    // Filtrar por rango
+    const desde=rangoDesde, hasta=rangoHasta;
+    const filtrados = data.filter(r=>enRango(r['Fecha'],desde,hasta));
+    const mostrar = filtrados.length>0 ? filtrados : data;
+    const hoyRec=mostrar[0];
+    const kpis=document.querySelectorAll('#view-consultorio .kpi');
+    if(hoyRec&&kpis[0]) {
+      const disp=parseInt(hoyRec['Turnos disponibles']||hoyRec['Turnos Disponibles']||0);
+      const asig=parseInt(hoyRec['Turnos asignados']||hoyRec['Turnos Asignados']||0);
+      const aten=parseInt(hoyRec['Turnos atendidos']||hoyRec['Turnos Atendidos']||0);
+      const ausHoy=asig>0?Math.round((asig-aten)/asig*100):0;
+      kpis[0].querySelector('.kpi-val').textContent=disp;
+      kpis[1].querySelector('.kpi-val').textContent=asig;
+      kpis[2].querySelector('.kpi-val').textContent=aten;
+      kpis[3].querySelector('.kpi-val').innerHTML=ausHoy+'<sup>%</sup>';
+      const sc=semColor(ausHoy,15,20);
+      kpis[3].querySelector('.sem-dot').className='sem-dot '+sc;
+    }
+    const totalAsig=mostrar.reduce((s,r)=>s+parseInt(r['Turnos asignados']||0),0);
+    const totalAten=mostrar.reduce((s,r)=>s+parseInt(r['Turnos atendidos']||0),0);
+    const ausMes=totalAsig>0?Math.round((totalAsig-totalAten)/totalAsig*100):0;
+    if(kpis[4]) {
+      kpis[4].querySelector('.kpi-val').innerHTML=ausMes+'<sup>%</sup>';
+      const sc=semColor(ausMes,15,20);
+      kpis[4].querySelector('.sem-dot').className='sem-dot '+sc;
+    }
+    let html='';
+    mostrar.forEach(r=>{
+      const asig=parseInt(r['Turnos asignados']||0);
+      const aten=parseInt(r['Turnos atendidos']||0);
+      const aus=asig>0?Math.round((asig-aten)/asig*100):0;
+      const ausColor=aus>20?'var(--red)':aus>15?'var(--amber)':'var(--green)';
+      const obs=(r['Observaciones']||'').substring(0,40);
+      html+=`<tr>
+        <td class="mono muted">${r['Fecha']||'—'}</td>
+        <td style="font-size:10px">${r['Dia']||r['Día']||'—'}</td>
+        <td class="mono r">${r['Turnos disponibles']||'—'}</td>
+        <td class="mono r">${asig||'—'}</td>
+        <td class="mono r">${aten||'—'}</td>
+        <td class="mono r" style="color:${ausColor}">${aus}%</td>
+        <td style="font-size:9px;color:${obs.toLowerCase().includes('paro')?'var(--red)':'var(--muted)'}">${obs||'—'}</td>
+      </tr>`;
+    });
+    tbody.innerHTML=html||'<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted)">Sin datos en el período</td></tr>';
+    const barchart=document.querySelector('#view-consultorio .barchart');
+    if(barchart) {
+      const items=[...mostrar].reverse().slice(-6);
+      barchart.innerHTML=items.map(r=>{
+        const asig=parseInt(r['Turnos asignados']||0);
+        const aten=parseInt(r['Turnos atendidos']||0);
+        const aus=asig>0?Math.round((asig-aten)/asig*100):0;
+        const c=aus>20?'var(--red)':'var(--amber)';
+        return `<div class="brow"><div class="blbl">${r['Fecha']||''}</div><div class="btrack"><div class="bfill" style="width:${aus}%;background:${c}"></div></div><div class="bval">${aus}%</div></div>`;
+      }).join('');
+    }
+  } catch(e) {
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── RESUMEN: cargar KPIs al inicio ─────────────────────
+async function loadResumen() {
+  try {
+    // Internación — siempre último censo (no depende del rango)
+    const intern = await fetchSheet('Internacion');
+    const pu = intern.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('puerperio')).pop();
+    const ar = intern.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('aro')).pop();
+    if(pu) {
+      const tot=parseInt(pu['Ocupadas']||0)+parseInt(pu['Disponibles']||0);
+      const pct=tot>0?Math.round(parseInt(pu['Ocupadas']||0)/tot*100):0;
+      const kpiPu=document.getElementById('kpi-puerperio');
+      if(kpiPu) { kpiPu.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiPu.querySelector('.kpi-note').textContent=pu['Ocupadas']+'/'+tot+' camas'; }
+    }
+    if(ar) {
+      const tot=parseInt(ar['Ocupadas']||0)+parseInt(ar['Disponibles']||0);
+      const pct=tot>0?Math.round(parseInt(ar['Ocupadas']||0)/tot*100):0;
+      const kpiAro=document.getElementById('kpi-aro');
+      if(kpiAro) { kpiAro.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiAro.querySelector('.kpi-note').textContent=ar['Ocupadas']+'/'+tot+' · censo '+ar['Fecha']; }
+      const sc=semColor(pct,80,95);
+      const dot=kpiAro?kpiAro.querySelector('.sem-dot'):null;
+      if(dot) dot.className='sem-dot '+sc;
+    }
+
+    // Determinar rango activo
+    const desde = rangoDesde || new Date();
+    const hasta = rangoHasta || new Date();
+    const esHoy = desde.toDateString()===hasta.toDateString()&&desde.toDateString()===new Date().toDateString();
+    const lblPeriodo = esHoy ? 'hoy' : desde.getDate()+'/'+( desde.getMonth()+1)+' – '+hasta.getDate()+'/'+(hasta.getMonth()+1);
+
+    // CO filtrado por rango
+    const co = await fetchSheet('Centro Obstetrico');
+    const delPeriodo = co.filter(r=>enRango(r.Fecha, desde, hasta));
+    const partos = delPeriodo.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const cesareas = delPeriodo.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
+    const tasaPeriodo = partos>0?Math.round(cesareas/partos*100):0;
+
+    // Tasa del mes completo para semáforo
+    const todosPartos=co.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const todosCes=co.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
+    const tasaMes=todosPartos>0?Math.round(todosCes/todosPartos*100):0;
+
+    const kpiPartos = document.querySelector('#kpi-partos');
+    if(kpiPartos) {
+      kpiPartos.querySelector('.kpi-val').textContent=partos;
+      kpiPartos.querySelector('.kpi-lbl').textContent='Partos '+lblPeriodo;
+      kpiPartos.querySelector('.kpi-note').textContent=cesareas+'C · '+(partos-cesareas)+'V';
+    }
+    document.querySelector('#kpi-cesareas .kpi-val').innerHTML=tasaPeriodo+'<sup>%</sup>';
+    const scC=semColor(tasaMes,52,57);
+    document.querySelector('#kpi-cesareas .sem-dot').className='sem-dot '+scC;
+    document.querySelector('#kpi-cesareas .kpi-note').textContent=(scC==='red'?'⚑ ':scC==='yellow'?'↑ ':'')+'meta <52% · mes: '+tasaMes+'%';
+
+    // Infecciones
+    try {
+      const inf = await fetchSheet('Infecciones');
+      if(inf&&inf.length>0) {
+        const r=inf[inf.length-1];
+        const endo=parseInt(r['Endometritis']||0);
+        const herida=parseInt(r['Inf herida quirurgica']||r['Inf. herida quirúrgica']||0);
+        const amb=parseInt(r['Infecciones Ambulatorias']||r['Infecciones ambulatorias']||0);
+        const rasp=parseInt(r['Inf raspado']||r['Inf. raspado']||0);
+        const lap=parseInt(r['Laparotomias']||r['Laparotomías']||0);
+        const intra=endo+herida+rasp+lap;
+        const total=intra+amb;
+        const set=(id,v,warn)=>{const el=document.getElementById(id);if(el){el.textContent=v;if(warn&&v>0)el.style.color='var(--amber)';}};
+        set('inf-endometritis',endo);
+        set('inf-herida',herida,true);
+        set('inf-ambulatorias',amb);
+        set('inf-raspado',rasp);
+        set('inf-laparotomias',lap);
+        const elIntra=document.getElementById('inf-intra');if(elIntra)elIntra.textContent=intra;
+        const elTot=document.getElementById('inf-total');if(elTot)elTot.textContent=total;
+        // Tasa ISQ sobre cesáreas del mes
+        const tasaISQ=todosCes>0?(herida/todosCes*100).toFixed(1):'—';
+        const elTasa=document.getElementById('inf-tasa-isq');
+        if(elTasa){elTasa.textContent=tasaISQ+'%';elTasa.style.color=parseFloat(tasaISQ)>5?'var(--red)':parseFloat(tasaISQ)>3.5?'var(--amber)':'var(--green)';}
+      }
+    } catch(e){console.warn('Infecciones:',e);}
+
+    // Derivaciones con Zona
+    try {
+      const deriv = await fetchSheet('Derivaciones');
+      const enviadas=deriv.filter(r=>(r['Tipo']||'').toLowerCase().includes('enviada'));
+      const recibidas=deriv.filter(r=>(r['Tipo']||'').toLowerCase().includes('recibida'));
+      let html='';
+      html+=`<div style="display:flex;justify-content:space-between;font-size:10.5px"><span style="color:var(--muted2)">Enviadas</span><span style="font-family:'IBM Plex Mono',monospace">${enviadas.length}</span></div>`;
+      enviadas.slice(-2).forEach(r=>{
+        const zona=r['Zona']?` · ${r['Zona']}`:'';
+        html+=`<div style="font-size:9px;color:var(--muted)">→ ${(r['Hospital']||'').substring(0,25)}${zona}<br><span style="color:var(--muted)">${(r['Motivo Diagnostico']||'').substring(0,30)}</span></div>`;
+      });
+      html+=`<div style="display:flex;justify-content:space-between;font-size:10.5px;margin-top:6px"><span style="color:var(--muted2)">Recibidas</span><span style="font-family:'IBM Plex Mono',monospace">${recibidas.length}</span></div>`;
+      recibidas.slice(-2).forEach(r=>{
+        const zona=r['Zona']?` · ${r['Zona']}`:'';
+        html+=`<div style="font-size:9px;color:var(--muted)">← ${(r['Hospital']||'').substring(0,25)}${zona}<br><span style="color:var(--muted)">${(r['Motivo Diagnostico']||'').substring(0,30)}</span></div>`;
+      });
+      const el=document.getElementById('derivaciones-list');
+      if(el) el.innerHTML=html||'<div style="font-size:9.5px;color:var(--muted)">Sin derivaciones</div>';
+    } catch(e){console.warn('Derivaciones:',e);}
+
+    // Donut partos del mes
+    try {
+      const vaginales2=co.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
+      const forceps=co.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('forceps')||r['Tipo de parto'].toLowerCase().includes('fórceps'))).length;
+      const pctV=todosPartos>0?Math.round(vaginales2/todosPartos*100):0;
+      const pctC=todosPartos>0?Math.round(todosCes/todosPartos*100):0;
+      const pctF=todosPartos>0?Math.round(forceps/todosPartos*100):0;
+      const circ=201; // 2*pi*32
+      const arcV=Math.round(pctV/100*circ), arcC=Math.round(pctC/100*circ), arcF=Math.round(pctF/100*circ);
+      const svg=document.querySelector('#view-resumen svg');
+      if(svg){
+        const circles=svg.querySelectorAll('circle:not(:first-child)');
+        if(circles[0]){circles[0].setAttribute('stroke-dasharray',arcV+' '+(circ-arcV));circles[0].setAttribute('stroke-dashoffset','0');}
+        if(circles[1]){circles[1].setAttribute('stroke-dasharray',arcC+' '+(circ-arcC));circles[1].setAttribute('stroke-dashoffset','-'+arcV);}
+        if(circles[2]&&forceps>0){circles[2].setAttribute('stroke-dasharray',arcF+' '+(circ-arcF));circles[2].setAttribute('stroke-dashoffset','-'+(arcV+arcC));}
+        const texts=svg.querySelectorAll('text');
+        if(texts[0]) texts[0].textContent=todosPartos;
+      }
+      // Leyenda
+      const dleg=document.querySelector('#view-resumen .dleg');
+      if(dleg){
+        const rows=dleg.querySelectorAll('.dleg-row');
+        if(rows[0]) rows[0].querySelector('.dleg-val').innerHTML=vaginales2+' <span class="dleg-pct">'+pctV+'%</span>';
+        if(rows[1]) rows[1].querySelector('.dleg-val').innerHTML=todosCes+' <span class="dleg-pct">'+pctC+'%</span>';
+        if(rows[2]&&forceps>0) rows[2].querySelector('.dleg-val').innerHTML=forceps+' <span class="dleg-pct">'+pctF+'%</span>';
+        if(rows[3]) rows[3].querySelector('.dleg-val').innerHTML='<span style="color:var(--'+(scC==='red'?'red':scC==='yellow'?'amber':'green')+')">'+tasaMes+'%</span>';
+      }
+    } catch(e){console.warn('Donut:',e);}
+    const cons = await fetchSheet('Consultorio PB');
+    const consPeriodo = cons.filter(r=>enRango(r['Fecha'], desde, hasta));
+    const totalAsig = consPeriodo.reduce((s,r)=>s+parseInt(r['Turnos asignados']||0),0);
+    const totalAten = consPeriodo.reduce((s,r)=>s+parseInt(r['Turnos atendidos']||0),0);
+
+    // Hosp de día filtrado por rango
+    const hd = await fetchSheet('Hospital de Dia');
+    const hdPeriodo = hd.filter(r=>enRango(r['Fecha'], desde, hasta));
+    const totalHDPac = hdPeriodo.reduce((s,r)=>s+parseInt(r['Total pacientes']||0),0);
+    const totalHDEco = hdPeriodo.reduce((s,r)=>s+parseInt(r['Ecografias']||0),0);
+    const totalHDNST = hdPeriodo.reduce((s,r)=>s+parseInt(r['NST']||0),0);
+
+    // KPI Hosp Día
+    const kpiHD = document.querySelector('#view-resumen .kpi.c-teal');
+    if(kpiHD) {
+      kpiHD.querySelector('.kpi-lbl').textContent='Hosp. Día '+lblPeriodo;
+      kpiHD.querySelector('.kpi-val').textContent=totalHDPac||'—';
+      kpiHD.querySelector('.kpi-note').textContent=totalHDEco+' eco · '+totalHDNST+' NST';
+    }
+
+    // ── ALERTAS DINÁMICAS ──────────────────────────────
+    try {
+      const alertas = [];
+
+      // 1. Tasa cesáreas
+      if(tasaMes > 57) alertas.push({nivel:'crit', msg:'Tasa cesáreas '+tasaMes+'% · meta <52%', ts:'Mayo 2026'});
+      else if(tasaMes > 52) alertas.push({nivel:'warn', msg:'Tasa cesáreas '+tasaMes+'% · zona amarilla', ts:'Mayo 2026'});
+
+      // 2. ARO
+      if(ar) {
+        const totAro=parseInt(ar['Ocupadas']||0)+parseInt(ar['Disponibles']||0);
+        const pctAro=totAro>0?Math.round(parseInt(ar['Ocupadas']||0)/totAro*100):0;
+        if(pctAro>=95) alertas.push({nivel:'crit', msg:'ARO al '+pctAro+'% · '+ar['Ocupadas']+'/'+totAro+' camas · crítico', ts:ar['Fecha']||'Hoy'});
+        else if(pctAro>=80) alertas.push({nivel:'warn', msg:'ARO al '+pctAro+'% · '+ar['Ocupadas']+'/'+totAro+' camas', ts:ar['Fecha']||'Hoy'});
+      }
+
+      // 3. Puerperio camas prestadas
+      if(pu) {
+        const prestadas=parseInt(pu['Prestadas']||0);
+        if(prestadas>=8) alertas.push({nivel:'warn', msg:'Puerperio '+prestadas+' camas prestadas', ts:pu['Fecha']||'Hoy'});
+      }
+
+      // 4. Censo sin actualizar (más de 2 días)
+      if(ar) {
+        const fechaCenso=parseFecha(ar['Fecha']);
+        if(fechaCenso) {
+          const diasSinCenso=Math.floor((new Date()-fechaCenso)/(1000*60*60*24));
+          if(diasSinCenso>2) alertas.push({nivel:'warn', msg:'Censo camas sin actualizar · '+diasSinCenso+' días', ts:ar['Fecha']});
+        }
+      }
+
+      // 5. ISQ
+      try {
+        const inf2=await fetchSheet('Infecciones');
+        if(inf2&&inf2.length>0) {
+          const ri=inf2[inf2.length-1];
+          const herida2=parseInt(ri['Inf herida quirurgica']||0);
+          const tasaISQ2=todosCes>0?(herida2/todosCes*100);
+          if(tasaISQ2>5) alertas.push({nivel:'crit', msg:'ISQ '+tasaISQ2.toFixed(1)+'% · por encima de meta 5%', ts:'Mayo 2026'});
+          else if(tasaISQ2>3.5) alertas.push({nivel:'warn', msg:'ISQ '+tasaISQ2.toFixed(1)+'% · zona amarilla · meta <5%', ts:'Mayo 2026'});
+        }
+      } catch(e){}
+
+      // 6. Hosp Día sin ecografista (último día con 0 ecografías)
+      try {
+        const hdAlerta=hd.filter(r=>parseInt(r['Ecografias']||0)===0);
+        if(hdAlerta.length>0) {
+          const ult=hdAlerta[hdAlerta.length-1];
+          alertas.push({nivel:'warn', msg:'CEEPYP sin ecografista · '+ult['Fecha'], ts:ult['Fecha']||'Reciente'});
+        }
+      } catch(e){}
+
+      // Actualizar chip de alertas
+      const chipAlertas=document.getElementById('chip-alertas');
+      if(chipAlertas) {
+        const nCrit=alertas.filter(a=>a.nivel==='crit').length;
+        const nWarn=alertas.filter(a=>a.nivel==='warn').length;
+        const total=alertas.length;
+        chipAlertas.textContent='⚑ '+total+' '+(total===1?'alerta':'alertas');
+        chipAlertas.className='chip '+(nCrit>0?'chip-red':'chip-amber');
+      }
+
+      // Actualizar lista de alertas en sidebar
+      const alertList=document.querySelector('.alerts');
+      if(alertList&&alertas.length>0) {
+        alertList.innerHTML=alertas.map(a=>`
+          <div class="alert ${a.nivel==='crit'?'crit':a.nivel==='warn'?'warn':'info'}">
+            <div class="alert-msg">${a.msg}</div>
+            <div class="alert-ts">${a.ts}</div>
+          </div>
+        `).join('');
+      } else if(alertList) {
+        alertList.innerHTML='<div style="font-size:10px;color:var(--green);padding:6px 0">✓ Sin alertas activas</div>';
+      }
+    } catch(e){console.warn('Alertas:',e);}
+
+  } catch(e) { console.error('Resumen error:',e); }
+}
+
+// Cargar resumen al inicio
+loadResumen();
+</script>
+</body>
+</html>
