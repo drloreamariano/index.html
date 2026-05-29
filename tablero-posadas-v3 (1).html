@@ -1673,14 +1673,10 @@ function recargarVista() {
   const btn = document.getElementById('btn-reload');
   if(btn) { btn.textContent='↻ Actualizando...'; btn.style.color='var(--blue)'; }
   const vistas = ['resumen','co','aro','puerperio','ceepyp','hospdia','consultorio','sip-estadistica','sip-gestion','sip-indicadores'];
-  const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active'));
+  const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active')) || 'resumen';
   const loaderMap = {resumen:loadResumen, co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio};
-  const fn = loaderMap[activa];
-  if(fn) {
-    fn().finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
-  } else {
-    if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';}
-  }
+  const fn = loaderMap[activa] || loadResumen;
+  Promise.resolve(fn()).finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
 }
 function updateTS() {
   const n = new Date();
@@ -1703,7 +1699,8 @@ function showView(name, tabEl) {
 
 // ── HELPERS ────────────────────────────────────────────
 async function fetchSheet(sheet) {
-  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet));
+  const ts = Date.now();
+  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet) + '&ts=' + ts);
   return res.json();
 }
 
