@@ -301,7 +301,7 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
     </div>
 
     <div class="kpis kpis-6">
-      <div class="kpi c-blue">
+      <div class="kpi c-blue" id="kpi-partos">
         <div class="kpi-lbl">Partos hoy</div>
         <div class="kpi-val">4</div>
         <div class="kpi-note up">26/05 hasta ahora</div>
@@ -324,7 +324,7 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
         <div class="kpi-val">73<sup>%</sup></div>
         <div class="kpi-note warn">8/11 · censo 26/05</div>
       </div>
-      <div class="kpi c-teal">
+      <div class="kpi c-teal" id="kpi-hospdia">
         <div class="kpi-lbl">Hosp. Día hoy</div>
         <div class="kpi-val">14</div>
         <div class="kpi-note">0 eco · 9 NST</div>
@@ -1673,14 +1673,10 @@ function recargarVista() {
   const btn = document.getElementById('btn-reload');
   if(btn) { btn.textContent='↻ Actualizando...'; btn.style.color='var(--blue)'; }
   const vistas = ['resumen','co','aro','puerperio','ceepyp','hospdia','consultorio','sip-estadistica','sip-gestion','sip-indicadores'];
-  const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active'));
+  const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active')) || 'resumen';
   const loaderMap = {resumen:loadResumen, co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio};
-  const fn = loaderMap[activa];
-  if(fn) {
-    fn().finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
-  } else {
-    if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';}
-  }
+  const fn = loaderMap[activa] || loadResumen;
+  Promise.resolve(fn()).finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
 }
 function updateTS() {
   const n = new Date();
@@ -1703,7 +1699,8 @@ function showView(name, tabEl) {
 
 // ── HELPERS ────────────────────────────────────────────
 async function fetchSheet(sheet) {
-  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet));
+  const ts = Date.now();
+  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet) + '&ts=' + ts);
   return res.json();
 }
 
@@ -2238,17 +2235,25 @@ async function loadResumen() {
     const totalAsig = consPeriodo.reduce((s,r)=>s+parseInt(r['Turnos asignados']||0),0);
     const totalAten = consPeriodo.reduce((s,r)=>s+parseInt(r['Turnos atendidos']||0),0);
 
-    // Hosp de día filtrado por rango
+    // Hosp de día - último registro para KPI, período para totales
     const hd = await fetchSheet('Hospital de Dia');
+    // Ordenar por fecha desc para obtener el más reciente
+    hd.sort((a,b)=>{
+      const fa=parseFecha(a['Fecha']), fb=parseFecha(b['Fecha']);
+      if(!fa||!fb) return 0; return fb-fa;
+    });
+    const hdUltimo = hd[0];
     const hdPeriodo = hd.filter(r=>enRango(r['Fecha'], desde, hasta));
-    const totalHDPac = hdPeriodo.reduce((s,r)=>s+parseInt(r['Total pacientes']||0),0);
-    const totalHDEco = hdPeriodo.reduce((s,r)=>s+parseInt(r['Ecografias']||0),0);
-    const totalHDNST = hdPeriodo.reduce((s,r)=>s+parseInt(r['NST']||0),0);
+    const hdMostrar = hdPeriodo.length > 0 ? hdPeriodo : hd.slice(0,1);
+    const totalHDPac = hdMostrar.reduce((s,r)=>s+parseInt(r['Total pacientes']||0),0);
+    const totalHDEco = hdMostrar.reduce((s,r)=>s+parseInt(r['Ecografias']||0),0);
+    const totalHDNST = hdMostrar.reduce((s,r)=>s+parseInt(r['NST']||0),0);
 
     // KPI Hosp Día
-    const kpiHD = document.querySelector('#view-resumen .kpi.c-teal');
+    const kpiHD = document.getElementById('kpi-hospdia');
     if(kpiHD) {
-      kpiHD.querySelector('.kpi-lbl').textContent='Hosp. Día '+lblPeriodo;
+      const fechaHD = hdUltimo ? hdUltimo['Fecha'] : '—';
+      kpiHD.querySelector('.kpi-lbl').textContent='Hosp. Día '+fechaHD;
       kpiHD.querySelector('.kpi-val').textContent=totalHDPac||'—';
       kpiHD.querySelector('.kpi-note').textContent=totalHDEco+' eco · '+totalHDNST+' NST';
     }
