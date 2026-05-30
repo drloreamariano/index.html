@@ -438,46 +438,40 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
     </div>
 
     <div class="brow2">
+      <!-- Últimos eventos CO - dinámico -->
       <div class="card" style="padding:11px 13px">
         <div class="ctitle">Últimos eventos · CO</div>
         <table class="mtable">
           <thead><tr><th>Hora</th><th>Tipo</th><th>EG</th><th>Peso</th><th>Apgar</th><th>Comp.</th></tr></thead>
-          <tbody>
-            <tr><td class="mono muted">20:30</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">39s</td><td class="mono">3.570g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
-            <tr><td class="mono muted">13:00</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">35s</td><td class="mono">—</td><td class="mono">—</td><td><span class="tag tag-r">RPM+DCA</span></td></tr>
-            <tr><td class="mono muted">11:51</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">38.5s</td><td class="mono">3.875g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
-            <tr><td class="mono muted">10:20</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">41s</td><td class="mono">3.925g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
+          <tbody id="resumen-co-tbody">
+            <tr><td colspan="6" style="text-align:center;color:var(--muted);font-size:10px">Cargando...</td></tr>
           </tbody>
         </table>
       </div>
+      <!-- Hospital de Día - dinámico -->
       <div class="card" style="padding:11px 13px">
-        <div class="ctitle">Hospital de Día <span>26/05 · 6° piso</span></div>
+        <div class="ctitle">Hospital de Día <span id="resumen-hd-fecha">—</span></div>
         <table class="mtable">
           <thead><tr><th>Indicador</th><th class="r">N</th><th class="r">Obs.</th></tr></thead>
-          <tbody>
-            <tr><td>Pacientes atendidas</td><td class="mono r">14</td><td class="muted r">—</td></tr>
-            <tr><td>Ecografías</td><td class="mono r">0</td><td class="r"><span class="tag tag-r">S/eco</span></td></tr>
-            <tr><td>NST realizados</td><td class="mono r">9</td><td class="muted r">—</td></tr>
-            <tr><td>Turnos quirúrgicos</td><td class="mono r">4</td><td class="muted r">—</td></tr>
-            <tr><td>Internadas ARO</td><td class="mono r">1</td><td class="r"><span class="tag tag-a">→ ARO</span></td></tr>
-            <tr><td>Inducciones</td><td class="mono r">2</td><td class="muted r">—</td></tr>
+          <tbody id="resumen-hd-tbody">
+            <tr><td colspan="3" style="text-align:center;color:var(--muted);font-size:10px">Cargando...</td></tr>
           </tbody>
         </table>
       </div>
+      <!-- Camas - dinámico -->
       <div class="card" style="padding:11px 13px">
-        <div class="ctitle">Camas <span>censo 26/05 · 11:21</span></div>
-        <div class="occ-rows">
-          <div class="occ-row"><div class="occ-top"><span>Puerperio</span><span>26 / 44</span></div><div class="occ-track"><div class="occ-fill" style="width:59%;background:var(--blue)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>ARO</span><span>8 / 11</span></div><div class="occ-track"><div class="occ-fill" style="width:73%;background:var(--purple)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>Prestadas</span><span>8</span></div><div class="occ-track"><div class="occ-fill" style="width:50%;background:var(--amber)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>Bloqueadas</span><span>0</span></div><div class="occ-track"><div class="occ-fill" style="width:0%;background:var(--muted)"></div></div></div>
+        <div class="ctitle">Camas <span id="resumen-camas-fecha">—</span></div>
+        <div class="occ-rows" id="resumen-camas-rows">
+          <div class="occ-row"><div class="occ-top"><span>Puerperio</span><span id="rc-pu">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-pu-bar" style="width:0%;background:var(--blue)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>ARO</span><span id="rc-aro">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-aro-bar" style="width:0%;background:var(--purple)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Prestadas</span><span id="rc-prest">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-prest-bar" style="width:0%;background:var(--amber)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Bloqueadas</span><span id="rc-bloq">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-bloq-bar" style="width:0%;background:var(--muted)"></div></div></div>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;flex-direction:column;gap:5px">
-          <div style="font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">Giro de cama · mayo</div>
+          <div style="font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">Estado actual</div>
           <div class="giro-list">
-            <div class="giro-row"><span>Puerperio prestadas</span><div><span class="giro-val" style="color:var(--amber)">8</span> <span class="giro-sub">camas</span></div></div>
-            <div class="giro-row"><span>ARO disponibles</span><div><span class="giro-val" style="color:var(--green)">3</span> <span class="giro-sub">camas</span></div></div>
-            <div class="giro-row"><span>Estadía prom.</span><div><span class="giro-val">3.8</span> <span class="giro-sub">días</span></div></div>
+            <div class="giro-row"><span>Puerperio prestadas</span><div><span class="giro-val" id="rc-prest-val" style="color:var(--amber)">—</span> <span class="giro-sub">camas</span></div></div>
+            <div class="giro-row"><span>ARO disponibles</span><div><span class="giro-val" id="rc-aro-disp" style="color:var(--green)">—</span> <span class="giro-sub">camas</span></div></div>
           </div>
         </div>
       </div>
@@ -1801,18 +1795,22 @@ async function loadCO() {
   try {
     const data = await fetchSheet('Centro Obstetrico');
     data.sort((a,b)=>{
-      const pa = a.Fecha.split('/').reverse().join(''), pb = b.Fecha.split('/').reverse().join('');
-      return pb.localeCompare(pa);
+      const fa=parseFecha(a.Fecha), fb=parseFecha(b.Fecha);
+      if(!fa||!fb) return 0; return fb-fa;
     });
-    const h = hoy();
-    const deHoy = data.filter(r => r.Fecha === h);
-    const partos = deHoy.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
-    const cesareas = deHoy.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
-    const vaginales = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
-    const aroHoy = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    // Usar la última fecha disponible en lugar de forzar "hoy"
+    const ultimaFecha = data[0]?data[0].Fecha:'';
+    const deUltima = ultimaFecha ? data.filter(r => r.Fecha === ultimaFecha) : [];
+    const partos = deUltima.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const cesareas = deUltima.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
+    const vaginales = deUltima.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
+    const aroHoy = deUltima.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
     const tasaCes = partos > 0 ? Math.round(cesareas/partos*100) : 0;
     document.getElementById('co-total').textContent = partos||'0';
+    const fechaSpan = document.getElementById('co-fecha');
+    if(fechaSpan) fechaSpan.textContent = ultimaFecha||'—';
     const kpis = document.querySelectorAll('#view-co .kpi');
+    if(kpis[0]) kpis[0].querySelector('.kpi-note').textContent = ultimaFecha+' · resueltos';
     if(kpis[1]) { kpis[1].querySelector('.kpi-val').innerHTML=tasaCes+'<sup>%</sup>'; kpis[1].querySelector('.kpi-note').textContent=cesareas+'C / '+vaginales+'V'; }
     if(kpis[3]) kpis[3].querySelector('.kpi-val').textContent=vaginales;
     if(kpis[4]) kpis[4].querySelector('.kpi-val').textContent=aroHoy;
@@ -2132,12 +2130,18 @@ async function loadResumen() {
     const esHoy = desde.toDateString()===hasta.toDateString()&&desde.toDateString()===new Date().toDateString();
     const lblPeriodo = esHoy ? 'hoy' : desde.getDate()+'/'+( desde.getMonth()+1)+' – '+hasta.getDate()+'/'+(hasta.getMonth()+1);
 
-    // CO filtrado por rango
+    // CO - usar última fecha disponible para KPI de partos
     const co = await fetchSheet('Centro Obstetrico');
-    const delPeriodo = co.filter(r=>enRango(r.Fecha, desde, hasta));
+    co.sort((a,b)=>{const fa=parseFecha(a.Fecha),fb=parseFecha(b.Fecha);if(!fa||!fb)return 0;return fb-fa;});
+    const ultimaFechaCO = co[0]?co[0].Fecha:'';
+    // Si hay rango seleccionado que no es hoy, usar ese rango. Si es hoy sin datos, usar última fecha
+    const delPeriodo = esHoy ? 
+      (co.filter(r=>r.Fecha===ultimaFechaCO)) :
+      co.filter(r=>enRango(r.Fecha, desde, hasta));
     const partos = delPeriodo.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
     const cesareas = delPeriodo.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
     const tasaPeriodo = partos>0?Math.round(cesareas/partos*100):0;
+    const lblFecha = esHoy ? ultimaFechaCO : lblPeriodo;
 
     // Tasa del mes completo para semáforo
     const todosPartos=co.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
@@ -2147,7 +2151,7 @@ async function loadResumen() {
     const kpiPartos = document.querySelector('#kpi-partos');
     if(kpiPartos) {
       kpiPartos.querySelector('.kpi-val').textContent=partos;
-      kpiPartos.querySelector('.kpi-lbl').textContent='Partos '+lblPeriodo;
+      kpiPartos.querySelector('.kpi-lbl').textContent='Partos '+lblFecha;
       kpiPartos.querySelector('.kpi-note').textContent=cesareas+'C · '+(partos-cesareas)+'V';
     }
     document.querySelector('#kpi-cesareas .kpi-val').innerHTML=tasaPeriodo+'<sup>%</sup>';
@@ -2257,6 +2261,91 @@ async function loadResumen() {
       kpiHD.querySelector('.kpi-val').textContent=totalHDPac||'—';
       kpiHD.querySelector('.kpi-note').textContent=totalHDEco+' eco · '+totalHDNST+' NST';
     }
+
+    // ── CARDS DINÁMICAS ──────────────────────────────────
+    // Card 1: Últimos eventos CO
+    try {
+      const coData = await fetchSheet('Centro Obstetrico');
+      coData.sort((a,b)=>{
+        const fa=parseFecha(a.Fecha), fb=parseFecha(b.Fecha);
+        if(!fa||!fb) return 0; return fb-fa;
+      });
+      const ultimos = coData.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).slice(0,4);
+      const tbody = document.getElementById('resumen-co-tbody');
+      if(tbody) {
+        tbody.innerHTML = ultimos.map(r=>{
+          const peso=(r['RN1 Peso g']||'').replace(/\s*gr?/i,'');
+          const eg=r['RN1 EG sem']?r['RN1 EG sem']+'s':'—';
+          const hora=parseHora(r.Hora);
+          const comp=r['Detalle comp']||r['Comp materna']||'';
+          const tipo=r['Tipo de parto']||'';
+          const badge=tipo.toLowerCase().includes('vaginal')?'<span class="tag tag-b">Vaginal</span>':
+                       tipo.toLowerCase().includes('cesarea')||tipo.toLowerCase().includes('cesárea')?'<span class="tag tag-a">Cesárea</span>':
+                       '<span class="tag tag-p">'+tipo.substring(0,8)+'</span>';
+          const compBadge=comp?'<span class="tag tag-r" style="font-size:8px">'+comp.substring(0,12)+'</span>':'<span class="muted">—</span>';
+          return `<tr>
+            <td class="mono muted">${hora}</td>
+            <td>${badge}</td>
+            <td class="mono">${eg}</td>
+            <td class="mono">${peso?peso+'g':'—'}</td>
+            <td class="mono">${r['RN1 Apgar']||'—'}</td>
+            <td>${compBadge}</td>
+          </tr>`;
+        }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--muted);font-size:10px">Sin eventos recientes</td></tr>';
+      }
+    } catch(e){console.warn('Cards CO:',e);}
+
+    // Card 2: Hospital de Día último registro
+    try {
+      const hdCard = await fetchSheet('Hospital de Dia');
+      hdCard.sort((a,b)=>{const fa=parseFecha(a['Fecha']),fb=parseFecha(b['Fecha']);if(!fa||!fb)return 0;return fb-fa;});
+      const ult=hdCard[0];
+      if(ult) {
+        const fechaEl=document.getElementById('resumen-hd-fecha');
+        if(fechaEl) fechaEl.textContent=(ult['Fecha']||'—')+' · 6° piso';
+        const eco=parseInt(ult['Ecografias']||0);
+        const tbody2=document.getElementById('resumen-hd-tbody');
+        if(tbody2) tbody2.innerHTML=`
+          <tr><td>Pacientes atendidas</td><td class="mono r">${ult['Total pacientes']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Ecografías</td><td class="mono r" ${eco===0?'style="color:var(--red)"':''}>${eco}</td><td class="r">${eco===0?'<span class="tag tag-r">S/eco</span>':'<span class="muted">—</span>'}</td></tr>
+          <tr><td>NST realizados</td><td class="mono r">${ult['NST']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Turnos quirúrgicos</td><td class="mono r">${ult['Turnos quirurgicos']||ult['Turnos quirúrgicos']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Internadas ARO</td><td class="mono r">${ult['Internadas ARO']||'—'}</td><td class="r">${parseInt(ult['Internadas ARO']||0)>0?'<span class="tag tag-a">→ ARO</span>':'<span class="muted">—</span>'}</td></tr>
+          <tr><td>Obs.</td><td colspan="2" style="font-size:9px;color:var(--muted)">${(ult['Observaciones']||'—').substring(0,30)}</td></tr>
+        `;
+      }
+    } catch(e){console.warn('Cards HD:',e);}
+
+    // Card 3: Camas último censo
+    try {
+      const internCard = await fetchSheet('Internacion');
+      internCard.sort((a,b)=>{const fa=parseFecha(a['Fecha']),fb=parseFecha(b['Fecha']);if(!fa||!fb)return 0;return fb-fa;});
+      const ultPu=internCard.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('puerperio'))[0];
+      const ultAro=internCard.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('aro'))[0];
+      if(ultPu||ultAro) {
+        const fecha=(ultPu||ultAro)['Fecha']||'—';
+        const hora2=(ultPu||ultAro)['Hora']||'';
+        const fechaEl2=document.getElementById('resumen-camas-fecha');
+        if(fechaEl2) fechaEl2.textContent='censo '+fecha+(hora2?' · '+hora2:'');
+        if(ultPu) {
+          const totPu=parseInt(ultPu['Ocupadas']||0)+parseInt(ultPu['Disponibles']||0);
+          const pctPu=totPu>0?Math.round(parseInt(ultPu['Ocupadas']||0)/totPu*100):0;
+          document.getElementById('rc-pu').textContent=ultPu['Ocupadas']+' / '+totPu;
+          document.getElementById('rc-pu-bar').style.width=pctPu+'%';
+          document.getElementById('rc-prest').textContent=ultPu['Prestadas']||'0';
+          document.getElementById('rc-prest-bar').style.width=Math.min(parseInt(ultPu['Prestadas']||0)*5,100)+'%';
+          document.getElementById('rc-bloq').textContent=ultPu['Bloqueadas']||'0';
+          document.getElementById('rc-prest-val').textContent=ultPu['Prestadas']||'0';
+        }
+        if(ultAro) {
+          const totAro=parseInt(ultAro['Ocupadas']||0)+parseInt(ultAro['Disponibles']||0);
+          const pctAro=totAro>0?Math.round(parseInt(ultAro['Ocupadas']||0)/totAro*100):0;
+          document.getElementById('rc-aro').textContent=ultAro['Ocupadas']+' / '+totAro;
+          document.getElementById('rc-aro-bar').style.width=pctAro+'%';
+          document.getElementById('rc-aro-disp').textContent=ultAro['Disponibles']||'0';
+        }
+      }
+    } catch(e){console.warn('Cards Camas:',e);}
 
     // ── ALERTAS DINÁMICAS ──────────────────────────────
     try {
