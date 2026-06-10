@@ -357,26 +357,26 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
 
     <div class="mrow">
       <div class="card">
-        <div class="ctitle">Partos del mes <span>Mayo 2026 · parcial al 26/05</span></div>
+        <div class="ctitle">Partos del mes <span id="donut-titulo">Mayo 2026 · cargando...</span></div>
         <div class="donut-wrap">
-          <svg width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0">
+          <svg id="donut-svg" width="88" height="88" viewBox="0 0 88 88" style="flex-shrink:0">
             <circle cx="44" cy="44" r="32" fill="none" stroke="#161E2E" stroke-width="12"/>
-            <circle cx="44" cy="44" r="32" fill="none" stroke="#4F8EF7" stroke-width="12"
-              stroke-dasharray="86 115" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-            <circle cx="44" cy="44" r="32" fill="none" stroke="#9B7CF4" stroke-width="12"
-              stroke-dasharray="115 86" stroke-dashoffset="-86" stroke-linecap="round" transform="rotate(-90 44 44)"/>
-            <text x="44" y="40" text-anchor="middle" fill="#DDE4F0" font-family="IBM Plex Mono" font-size="16" font-weight="500">26</text>
+            <circle id="donut-arc-v" cx="44" cy="44" r="32" fill="none" stroke="#4F8EF7" stroke-width="12"
+              stroke-dasharray="0 201" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+            <circle id="donut-arc-c" cx="44" cy="44" r="32" fill="none" stroke="#9B7CF4" stroke-width="12"
+              stroke-dasharray="0 201" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 44 44)"/>
+            <text id="donut-total" x="44" y="40" text-anchor="middle" fill="#DDE4F0" font-family="IBM Plex Mono" font-size="16" font-weight="500">—</text>
             <text x="44" y="52" text-anchor="middle" fill="#5A6B88" font-family="Sora" font-size="8">partos</text>
           </svg>
           <div class="dleg">
-            <div class="dleg-row"><div class="dleg-dot" style="background:var(--blue)"></div><div class="dleg-lbl">Vaginal</div><div class="dleg-val">11 <span class="dleg-pct">42%</span></div></div>
-            <div class="dleg-row"><div class="dleg-dot" style="background:var(--purple)"></div><div class="dleg-lbl">Cesárea</div><div class="dleg-val">15 <span class="dleg-pct">58%</span></div></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:var(--blue)"></div><div class="dleg-lbl">Vaginal</div><div class="dleg-val" id="donut-vag">— <span class="dleg-pct">—</span></div></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:var(--purple)"></div><div class="dleg-lbl">Cesárea</div><div class="dleg-val" id="donut-ces">— <span class="dleg-pct">—</span></div></div>
             <div class="dleg-row" style="margin-top:5px;padding-top:7px;border-top:1px solid var(--border2)">
               <div class="dleg-dot" style="background:transparent;border:1px solid var(--red);border-radius:50%"></div>
               <div class="dleg-lbl">Tasa cesáreas</div>
-              <div class="dleg-val" style="color:var(--red)">57.7%</div>
+              <div class="dleg-val" id="donut-tasa" style="color:var(--red)">—</div>
             </div>
-            <div class="dleg-row"><div class="dleg-dot" style="background:transparent"></div><div class="dleg-lbl">FM registrado</div><div class="dleg-val" style="color:var(--red)">1</div></div>
+            <div class="dleg-row"><div class="dleg-dot" style="background:transparent"></div><div class="dleg-lbl">FM registrado</div><div class="dleg-val" id="donut-fm" style="color:var(--red)">—</div></div>
           </div>
         </div>
       </div>
@@ -438,46 +438,40 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
     </div>
 
     <div class="brow2">
+      <!-- Últimos eventos CO - dinámico -->
       <div class="card" style="padding:11px 13px">
         <div class="ctitle">Últimos eventos · CO</div>
         <table class="mtable">
           <thead><tr><th>Hora</th><th>Tipo</th><th>EG</th><th>Peso</th><th>Apgar</th><th>Comp.</th></tr></thead>
-          <tbody>
-            <tr><td class="mono muted">20:30</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">39s</td><td class="mono">3.570g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
-            <tr><td class="mono muted">13:00</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">35s</td><td class="mono">—</td><td class="mono">—</td><td><span class="tag tag-r">RPM+DCA</span></td></tr>
-            <tr><td class="mono muted">11:51</td><td><span class="tag tag-a">Cesárea</span></td><td class="mono">38.5s</td><td class="mono">3.875g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
-            <tr><td class="mono muted">10:20</td><td><span class="tag tag-b">Vaginal</span></td><td class="mono">41s</td><td class="mono">3.925g</td><td class="mono">9/10</td><td class="muted">—</td></tr>
+          <tbody id="resumen-co-tbody">
+            <tr><td colspan="6" style="text-align:center;color:var(--muted);font-size:10px">Cargando...</td></tr>
           </tbody>
         </table>
       </div>
+      <!-- Hospital de Día - dinámico -->
       <div class="card" style="padding:11px 13px">
-        <div class="ctitle">Hospital de Día <span>26/05 · 6° piso</span></div>
+        <div class="ctitle">Hospital de Día <span id="resumen-hd-fecha">—</span></div>
         <table class="mtable">
           <thead><tr><th>Indicador</th><th class="r">N</th><th class="r">Obs.</th></tr></thead>
-          <tbody>
-            <tr><td>Pacientes atendidas</td><td class="mono r">14</td><td class="muted r">—</td></tr>
-            <tr><td>Ecografías</td><td class="mono r">0</td><td class="r"><span class="tag tag-r">S/eco</span></td></tr>
-            <tr><td>NST realizados</td><td class="mono r">9</td><td class="muted r">—</td></tr>
-            <tr><td>Turnos quirúrgicos</td><td class="mono r">4</td><td class="muted r">—</td></tr>
-            <tr><td>Internadas ARO</td><td class="mono r">1</td><td class="r"><span class="tag tag-a">→ ARO</span></td></tr>
-            <tr><td>Inducciones</td><td class="mono r">2</td><td class="muted r">—</td></tr>
+          <tbody id="resumen-hd-tbody">
+            <tr><td colspan="3" style="text-align:center;color:var(--muted);font-size:10px">Cargando...</td></tr>
           </tbody>
         </table>
       </div>
+      <!-- Camas - dinámico -->
       <div class="card" style="padding:11px 13px">
-        <div class="ctitle">Camas <span>censo 26/05 · 11:21</span></div>
-        <div class="occ-rows">
-          <div class="occ-row"><div class="occ-top"><span>Puerperio</span><span>26 / 44</span></div><div class="occ-track"><div class="occ-fill" style="width:59%;background:var(--blue)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>ARO</span><span>8 / 11</span></div><div class="occ-track"><div class="occ-fill" style="width:73%;background:var(--purple)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>Prestadas</span><span>8</span></div><div class="occ-track"><div class="occ-fill" style="width:50%;background:var(--amber)"></div></div></div>
-          <div class="occ-row"><div class="occ-top"><span>Bloqueadas</span><span>0</span></div><div class="occ-track"><div class="occ-fill" style="width:0%;background:var(--muted)"></div></div></div>
+        <div class="ctitle">Camas <span id="resumen-camas-fecha">—</span></div>
+        <div class="occ-rows" id="resumen-camas-rows">
+          <div class="occ-row"><div class="occ-top"><span>Puerperio</span><span id="rc-pu">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-pu-bar" style="width:0%;background:var(--blue)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>ARO</span><span id="rc-aro">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-aro-bar" style="width:0%;background:var(--purple)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Prestadas</span><span id="rc-prest">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-prest-bar" style="width:0%;background:var(--amber)"></div></div></div>
+          <div class="occ-row"><div class="occ-top"><span>Bloqueadas</span><span id="rc-bloq">—</span></div><div class="occ-track"><div class="occ-fill" id="rc-bloq-bar" style="width:0%;background:var(--muted)"></div></div></div>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;flex-direction:column;gap:5px">
-          <div style="font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">Giro de cama · mayo</div>
+          <div style="font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">Estado actual</div>
           <div class="giro-list">
-            <div class="giro-row"><span>Puerperio prestadas</span><div><span class="giro-val" style="color:var(--amber)">8</span> <span class="giro-sub">camas</span></div></div>
-            <div class="giro-row"><span>ARO disponibles</span><div><span class="giro-val" style="color:var(--green)">3</span> <span class="giro-sub">camas</span></div></div>
-            <div class="giro-row"><span>Estadía prom.</span><div><span class="giro-val">3.8</span> <span class="giro-sub">días</span></div></div>
+            <div class="giro-row"><span>Puerperio prestadas</span><div><span class="giro-val" id="rc-prest-val" style="color:var(--amber)">—</span> <span class="giro-sub">camas</span></div></div>
+            <div class="giro-row"><span>ARO disponibles</span><div><span class="giro-val" id="rc-aro-disp" style="color:var(--green)">—</span> <span class="giro-sub">camas</span></div></div>
           </div>
         </div>
       </div>
@@ -1698,7 +1692,15 @@ function showView(name, tabEl) {
 }
 
 // ── HELPERS ────────────────────────────────────────────
-async function fetchSheet(sheet) {
+// ── CAPACIDAD REAL DEL SERVICIO ──────────────────────────
+// 63 camas totales · 8 prestadas fijas a Pediatría · 1 rota
+// Puerperio: 39 operativas (zona: ~48 - 1 rota - 8 prestadas)
+// ARO: 16 total · 12 obstétricas + 4 reservadas IVE/ILE
+const CAP_PUERPERIO = 39;
+const CAP_ARO       = 16;  // total zona ARO
+const CAP_ARO_OBST  = 12;  // ARO obstétrico (excluye IVE/ILE)
+const CAP_ARO_IVE   = 4;   // habitación IVE/ILE
+// ─────────────────────────────────────────────────────────sheet) {
   const ts = Date.now();
   const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet) + '&ts=' + ts);
   return res.json();
@@ -1801,18 +1803,22 @@ async function loadCO() {
   try {
     const data = await fetchSheet('Centro Obstetrico');
     data.sort((a,b)=>{
-      const pa = a.Fecha.split('/').reverse().join(''), pb = b.Fecha.split('/').reverse().join('');
-      return pb.localeCompare(pa);
+      const fa=parseFecha(a.Fecha), fb=parseFecha(b.Fecha);
+      if(!fa||!fb) return 0; return fb-fa;
     });
-    const h = hoy();
-    const deHoy = data.filter(r => r.Fecha === h);
-    const partos = deHoy.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
-    const cesareas = deHoy.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
-    const vaginales = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
-    const aroHoy = deHoy.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    // Usar la última fecha disponible en lugar de forzar "hoy"
+    const ultimaFecha = data[0]?data[0].Fecha:'';
+    const deUltima = ultimaFecha ? data.filter(r => r.Fecha === ultimaFecha) : [];
+    const partos = deUltima.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
+    const cesareas = deUltima.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
+    const vaginales = deUltima.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
+    const aroHoy = deUltima.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
     const tasaCes = partos > 0 ? Math.round(cesareas/partos*100) : 0;
     document.getElementById('co-total').textContent = partos||'0';
+    const fechaSpan = document.getElementById('co-fecha');
+    if(fechaSpan) fechaSpan.textContent = ultimaFecha||'—';
     const kpis = document.querySelectorAll('#view-co .kpi');
+    if(kpis[0]) kpis[0].querySelector('.kpi-note').textContent = ultimaFecha+' · resueltos';
     if(kpis[1]) { kpis[1].querySelector('.kpi-val').innerHTML=tasaCes+'<sup>%</sup>'; kpis[1].querySelector('.kpi-note').textContent=cesareas+'C / '+vaginales+'V'; }
     if(kpis[3]) kpis[3].querySelector('.kpi-val').textContent=vaginales;
     if(kpis[4]) kpis[4].querySelector('.kpi-val').textContent=aroHoy;
@@ -1848,10 +1854,12 @@ async function loadARO() {
   tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
   try {
     const data = await fetchSheet('ARO');
-    // Última actualización
-    const ultFecha = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso']).pop();
+    // Última actualización — ordenar por fecha para obtener la más reciente
+    const fechasOrdenadas = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso'])
+      .sort((a,b)=>{const fa=parseFecha(a),fb=parseFecha(b);if(!fa||!fb)return 0;return fb-fa;});
+    const ultFecha = fechasOrdenadas[0]||'—';
     const ctitle = document.querySelector('#view-aro .ctitle span');
-    if(ctitle) ctitle.textContent = 'activas · última carga: '+(ultFecha||'—');
+    if(ctitle) ctitle.textContent = 'activas · última carga: '+ultFecha;
     // Filtrar por rango si no es "hoy" — ARO muestra siempre activas, el rango filtra ingresos
     const activas = data.filter(r => !r['Fecha Alta'] || r['Fecha Alta'].trim()==='');
     const desde = rangoDesde, hasta = rangoHasta;
@@ -1911,9 +1919,11 @@ async function loadPuerperio() {
   tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:16px;color:var(--muted)">Cargando...</td></tr>';
   try {
     const data = await fetchSheet('Puerperio');
-    const ultFecha = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso']).pop();
+    const fechasOrdPu = data.filter(r=>r['Fecha Ingreso']).map(r=>r['Fecha Ingreso'])
+      .sort((a,b)=>{const fa=parseFecha(a),fb=parseFecha(b);if(!fa||!fb)return 0;return fb-fa;});
+    const ultFecha = fechasOrdPu[0]||'—';
     const ctitle = document.querySelector('#view-puerperio .ctitle span');
-    if(ctitle) ctitle.textContent = 'activas · última carga: '+(ultFecha||'—');
+    if(ctitle) ctitle.textContent = 'activas · última carga: '+ultFecha;
     const activas = data.filter(r=>!r['Fecha Alta']||r['Fecha Alta'].trim()==='');
     const kpis = document.querySelectorAll('#view-puerperio .kpi');
     if(kpis[0]) kpis[0].querySelector('.kpi-val').textContent=activas.length;
@@ -1981,13 +1991,15 @@ async function loadHospDia() {
     const desde=rangoDesde, hasta=rangoHasta;
     const filtrados = data.filter(r=>enRango(r['Fecha'],desde,hasta));
     const mostrar = filtrados.length>0 ? filtrados : data;
-    const hoyRec = mostrar[0];
+    const hoyRec = data[0]; // Siempre el más reciente para KPIs
     const kpis = document.querySelectorAll('#view-hospdia .kpi');
     if(hoyRec&&kpis[0]) {
       kpis[0].querySelector('.kpi-val').textContent=hoyRec['Total pacientes']||'0';
+      kpis[0].querySelector('.kpi-note').textContent=hoyRec['Fecha']||'—';
       const eco=parseInt(hoyRec['Ecografias']||0);
       kpis[1].querySelector('.kpi-val').textContent=eco;
       kpis[1].querySelector('.kpi-val').style.color=eco===0?'var(--red)':'var(--text)';
+      kpis[1].querySelector('.kpi-note').textContent=eco===0?'Sin ecografista':'realizadas';
       kpis[2].querySelector('.kpi-val').textContent=hoyRec['NST']||'0';
       kpis[3].querySelector('.kpi-val').textContent=hoyRec['Turnos quirurgicos']||hoyRec['Turnos quirúrgicos']||'0';
       kpis[4].querySelector('.kpi-val').textContent=hoyRec['Internadas ARO']||'0';
@@ -2047,7 +2059,7 @@ async function loadConsultorio() {
     const desde=rangoDesde, hasta=rangoHasta;
     const filtrados = data.filter(r=>enRango(r['Fecha'],desde,hasta));
     const mostrar = filtrados.length>0 ? filtrados : data;
-    const hoyRec=mostrar[0];
+    const hoyRec=data[0]; // Siempre el más reciente para KPIs
     const kpis=document.querySelectorAll('#view-consultorio .kpi');
     if(hoyRec&&kpis[0]) {
       const disp=parseInt(hoyRec['Turnos disponibles']||hoyRec['Turnos Disponibles']||0);
@@ -2055,6 +2067,7 @@ async function loadConsultorio() {
       const aten=parseInt(hoyRec['Turnos atendidos']||hoyRec['Turnos Atendidos']||0);
       const ausHoy=asig>0?Math.round((asig-aten)/asig*100):0;
       kpis[0].querySelector('.kpi-val').textContent=disp;
+      kpis[0].querySelector('.kpi-note').textContent=hoyRec['Fecha']+(hoyRec['Dia']?' · '+hoyRec['Dia']:'');
       kpis[1].querySelector('.kpi-val').textContent=asig;
       kpis[2].querySelector('.kpi-val').textContent=aten;
       kpis[3].querySelector('.kpi-val').innerHTML=ausHoy+'<sup>%</sup>';
@@ -2111,16 +2124,16 @@ async function loadResumen() {
     const pu = intern.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('puerperio')).pop();
     const ar = intern.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('aro')).pop();
     if(pu) {
-      const tot=parseInt(pu['Ocupadas']||0)+parseInt(pu['Disponibles']||0);
-      const pct=tot>0?Math.round(parseInt(pu['Ocupadas']||0)/tot*100):0;
+      const ocupPu=parseInt(pu['Ocupadas']||0);
+      const pct=Math.round(ocupPu/CAP_PUERPERIO*100);
       const kpiPu=document.getElementById('kpi-puerperio');
-      if(kpiPu) { kpiPu.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiPu.querySelector('.kpi-note').textContent=pu['Ocupadas']+'/'+tot+' camas'; }
+      if(kpiPu) { kpiPu.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiPu.querySelector('.kpi-note').textContent=ocupPu+'/'+CAP_PUERPERIO+' camas'; }
     }
     if(ar) {
-      const tot=parseInt(ar['Ocupadas']||0)+parseInt(ar['Disponibles']||0);
-      const pct=tot>0?Math.round(parseInt(ar['Ocupadas']||0)/tot*100):0;
+      const ocupAro=parseInt(ar['Ocupadas']||0);
+      const pct=Math.round(ocupAro/CAP_ARO*100);
       const kpiAro=document.getElementById('kpi-aro');
-      if(kpiAro) { kpiAro.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiAro.querySelector('.kpi-note').textContent=ar['Ocupadas']+'/'+tot+' · censo '+ar['Fecha']; }
+      if(kpiAro) { kpiAro.querySelector('.kpi-val').innerHTML=pct+'<sup>%</sup>'; kpiAro.querySelector('.kpi-note').textContent=ocupAro+'/'+CAP_ARO+' · censo '+ar['Fecha']; }
       const sc=semColor(pct,80,95);
       const dot=kpiAro?kpiAro.querySelector('.sem-dot'):null;
       if(dot) dot.className='sem-dot '+sc;
@@ -2132,12 +2145,18 @@ async function loadResumen() {
     const esHoy = desde.toDateString()===hasta.toDateString()&&desde.toDateString()===new Date().toDateString();
     const lblPeriodo = esHoy ? 'hoy' : desde.getDate()+'/'+( desde.getMonth()+1)+' – '+hasta.getDate()+'/'+(hasta.getMonth()+1);
 
-    // CO filtrado por rango
+    // CO - usar última fecha disponible para KPI de partos
     const co = await fetchSheet('Centro Obstetrico');
-    const delPeriodo = co.filter(r=>enRango(r.Fecha, desde, hasta));
+    co.sort((a,b)=>{const fa=parseFecha(a.Fecha),fb=parseFecha(b.Fecha);if(!fa||!fb)return 0;return fb-fa;});
+    const ultimaFechaCO = co[0]?co[0].Fecha:'';
+    // Si hay rango seleccionado que no es hoy, usar ese rango. Si es hoy sin datos, usar última fecha
+    const delPeriodo = esHoy ? 
+      (co.filter(r=>r.Fecha===ultimaFechaCO)) :
+      co.filter(r=>enRango(r.Fecha, desde, hasta));
     const partos = delPeriodo.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
     const cesareas = delPeriodo.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('cesarea')||r['Tipo de parto'].toLowerCase().includes('cesárea'))).length;
     const tasaPeriodo = partos>0?Math.round(cesareas/partos*100):0;
+    const lblFecha = esHoy ? ultimaFechaCO : lblPeriodo;
 
     // Tasa del mes completo para semáforo
     const todosPartos=co.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).length;
@@ -2147,7 +2166,7 @@ async function loadResumen() {
     const kpiPartos = document.querySelector('#kpi-partos');
     if(kpiPartos) {
       kpiPartos.querySelector('.kpi-val').textContent=partos;
-      kpiPartos.querySelector('.kpi-lbl').textContent='Partos '+lblPeriodo;
+      kpiPartos.querySelector('.kpi-lbl').textContent='Partos '+lblFecha;
       kpiPartos.querySelector('.kpi-note').textContent=cesareas+'C · '+(partos-cesareas)+'V';
     }
     document.querySelector('#kpi-cesareas .kpi-val').innerHTML=tasaPeriodo+'<sup>%</sup>';
@@ -2206,29 +2225,30 @@ async function loadResumen() {
     try {
       const vaginales2=co.filter(r=>r['Tipo de parto']&&r['Tipo de parto'].toLowerCase().includes('vaginal')).length;
       const forceps=co.filter(r=>r['Tipo de parto']&&(r['Tipo de parto'].toLowerCase().includes('forceps')||r['Tipo de parto'].toLowerCase().includes('fórceps'))).length;
+      const fm=co.filter(r=>r['Detalle comp']&&r['Detalle comp'].toUpperCase().includes('FM')).length;
       const pctV=todosPartos>0?Math.round(vaginales2/todosPartos*100):0;
       const pctC=todosPartos>0?Math.round(todosCes/todosPartos*100):0;
-      const pctF=todosPartos>0?Math.round(forceps/todosPartos*100):0;
-      const circ=201; // 2*pi*32
-      const arcV=Math.round(pctV/100*circ), arcC=Math.round(pctC/100*circ), arcF=Math.round(pctF/100*circ);
-      const svg=document.querySelector('#view-resumen svg');
-      if(svg){
-        const circles=svg.querySelectorAll('circle:not(:first-child)');
-        if(circles[0]){circles[0].setAttribute('stroke-dasharray',arcV+' '+(circ-arcV));circles[0].setAttribute('stroke-dashoffset','0');}
-        if(circles[1]){circles[1].setAttribute('stroke-dasharray',arcC+' '+(circ-arcC));circles[1].setAttribute('stroke-dashoffset','-'+arcV);}
-        if(circles[2]&&forceps>0){circles[2].setAttribute('stroke-dasharray',arcF+' '+(circ-arcF));circles[2].setAttribute('stroke-dashoffset','-'+(arcV+arcC));}
-        const texts=svg.querySelectorAll('text');
-        if(texts[0]) texts[0].textContent=todosPartos;
-      }
-      // Leyenda
-      const dleg=document.querySelector('#view-resumen .dleg');
-      if(dleg){
-        const rows=dleg.querySelectorAll('.dleg-row');
-        if(rows[0]) rows[0].querySelector('.dleg-val').innerHTML=vaginales2+' <span class="dleg-pct">'+pctV+'%</span>';
-        if(rows[1]) rows[1].querySelector('.dleg-val').innerHTML=todosCes+' <span class="dleg-pct">'+pctC+'%</span>';
-        if(rows[2]&&forceps>0) rows[2].querySelector('.dleg-val').innerHTML=forceps+' <span class="dleg-pct">'+pctF+'%</span>';
-        if(rows[3]) rows[3].querySelector('.dleg-val').innerHTML='<span style="color:var(--'+(scC==='red'?'red':scC==='yellow'?'amber':'green')+')">'+tasaMes+'%</span>';
-      }
+      const circ=201;
+      const arcV=Math.round(pctV/100*circ), arcC=Math.round(pctC/100*circ);
+      // Actualizar SVG con IDs
+      const arcV_el=document.getElementById('donut-arc-v');
+      const arcC_el=document.getElementById('donut-arc-c');
+      const tot_el=document.getElementById('donut-total');
+      if(arcV_el){arcV_el.setAttribute('stroke-dasharray',arcV+' '+(circ-arcV));arcV_el.setAttribute('stroke-dashoffset','0');}
+      if(arcC_el){arcC_el.setAttribute('stroke-dasharray',arcC+' '+(circ-arcC));arcC_el.setAttribute('stroke-dashoffset','-'+arcV);}
+      if(tot_el) tot_el.textContent=todosPartos;
+      // Título
+      const tit=document.getElementById('donut-titulo');
+      if(tit) tit.textContent='Mayo 2026 · parcial al '+ultimaFechaCO;
+      // Leyenda con IDs
+      const elVag=document.getElementById('donut-vag');
+      const elCes=document.getElementById('donut-ces');
+      const elTasa=document.getElementById('donut-tasa');
+      const elFm=document.getElementById('donut-fm');
+      if(elVag) elVag.innerHTML=vaginales2+' <span class="dleg-pct">'+pctV+'%</span>';
+      if(elCes) elCes.innerHTML=todosCes+' <span class="dleg-pct">'+pctC+'%</span>';
+      if(elTasa) elTasa.textContent=tasaMes+'%';
+      if(elFm) elFm.textContent=fm||'0';
     } catch(e){console.warn('Donut:',e);}
     const cons = await fetchSheet('Consultorio PB');
     const consPeriodo = cons.filter(r=>enRango(r['Fecha'], desde, hasta));
@@ -2258,6 +2278,91 @@ async function loadResumen() {
       kpiHD.querySelector('.kpi-note').textContent=totalHDEco+' eco · '+totalHDNST+' NST';
     }
 
+    // ── CARDS DINÁMICAS ──────────────────────────────────
+    // Card 1: Últimos eventos CO
+    try {
+      const coData = await fetchSheet('Centro Obstetrico');
+      coData.sort((a,b)=>{
+        const fa=parseFecha(a.Fecha), fb=parseFecha(b.Fecha);
+        if(!fa||!fb) return 0; return fb-fa;
+      });
+      const ultimos = coData.filter(r=>r['Tipo de parto']&&!r['Tipo de parto'].toLowerCase().includes('sin parto')).slice(0,4);
+      const tbody = document.getElementById('resumen-co-tbody');
+      if(tbody) {
+        tbody.innerHTML = ultimos.map(r=>{
+          const peso=(r['RN1 Peso g']||'').replace(/\s*gr?/i,'');
+          const eg=r['RN1 EG sem']?r['RN1 EG sem']+'s':'—';
+          const hora=parseHora(r.Hora);
+          const comp=r['Detalle comp']||r['Comp materna']||'';
+          const tipo=r['Tipo de parto']||'';
+          const badge=tipo.toLowerCase().includes('vaginal')?'<span class="tag tag-b">Vaginal</span>':
+                       tipo.toLowerCase().includes('cesarea')||tipo.toLowerCase().includes('cesárea')?'<span class="tag tag-a">Cesárea</span>':
+                       '<span class="tag tag-p">'+tipo.substring(0,8)+'</span>';
+          const compBadge=comp?'<span class="tag tag-r" style="font-size:8px">'+comp.substring(0,12)+'</span>':'<span class="muted">—</span>';
+          return `<tr>
+            <td class="mono muted">${hora}</td>
+            <td>${badge}</td>
+            <td class="mono">${eg}</td>
+            <td class="mono">${peso?peso+'g':'—'}</td>
+            <td class="mono">${r['RN1 Apgar']||'—'}</td>
+            <td>${compBadge}</td>
+          </tr>`;
+        }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--muted);font-size:10px">Sin eventos recientes</td></tr>';
+      }
+    } catch(e){console.warn('Cards CO:',e);}
+
+    // Card 2: Hospital de Día último registro
+    try {
+      const hdCard = await fetchSheet('Hospital de Dia');
+      hdCard.sort((a,b)=>{const fa=parseFecha(a['Fecha']),fb=parseFecha(b['Fecha']);if(!fa||!fb)return 0;return fb-fa;});
+      const ult=hdCard[0];
+      if(ult) {
+        const fechaEl=document.getElementById('resumen-hd-fecha');
+        if(fechaEl) fechaEl.textContent=(ult['Fecha']||'—')+' · 6° piso';
+        const eco=parseInt(ult['Ecografias']||0);
+        const tbody2=document.getElementById('resumen-hd-tbody');
+        if(tbody2) tbody2.innerHTML=`
+          <tr><td>Pacientes atendidas</td><td class="mono r">${ult['Total pacientes']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Ecografías</td><td class="mono r" ${eco===0?'style="color:var(--red)"':''}>${eco}</td><td class="r">${eco===0?'<span class="tag tag-r">S/eco</span>':'<span class="muted">—</span>'}</td></tr>
+          <tr><td>NST realizados</td><td class="mono r">${ult['NST']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Turnos quirúrgicos</td><td class="mono r">${ult['Turnos quirurgicos']||ult['Turnos quirúrgicos']||'—'}</td><td class="muted r">—</td></tr>
+          <tr><td>Internadas ARO</td><td class="mono r">${ult['Internadas ARO']||'—'}</td><td class="r">${parseInt(ult['Internadas ARO']||0)>0?'<span class="tag tag-a">→ ARO</span>':'<span class="muted">—</span>'}</td></tr>
+          <tr><td>Obs.</td><td colspan="2" style="font-size:9px;color:var(--muted)">${(ult['Observaciones']||'—').substring(0,30)}</td></tr>
+        `;
+      }
+    } catch(e){console.warn('Cards HD:',e);}
+
+    // Card 3: Camas último censo
+    try {
+      const internCard = await fetchSheet('Internacion');
+      internCard.sort((a,b)=>{const fa=parseFecha(a['Fecha']),fb=parseFecha(b['Fecha']);if(!fa||!fb)return 0;return fb-fa;});
+      const ultPu=internCard.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('puerperio'))[0];
+      const ultAro=internCard.filter(r=>r['Sector']&&r['Sector'].toLowerCase().includes('aro'))[0];
+      if(ultPu||ultAro) {
+        const fecha=(ultPu||ultAro)['Fecha']||'—';
+        const hora2=(ultPu||ultAro)['Hora']||'';
+        const fechaEl2=document.getElementById('resumen-camas-fecha');
+        if(fechaEl2) fechaEl2.textContent='censo '+fecha+(hora2?' · '+hora2:'');
+        if(ultPu) {
+          const ocupPu2=parseInt(ultPu['Ocupadas']||0);
+          const pctPu=Math.round(ocupPu2/CAP_PUERPERIO*100);
+          document.getElementById('rc-pu').textContent=ocupPu2+' / '+CAP_PUERPERIO;
+          document.getElementById('rc-pu-bar').style.width=pctPu+'%';
+          document.getElementById('rc-prest').textContent=ultPu['Prestadas']||'0';
+          document.getElementById('rc-prest-bar').style.width=Math.min(parseInt(ultPu['Prestadas']||0)*5,100)+'%';
+          document.getElementById('rc-bloq').textContent=ultPu['Bloqueadas']||'0';
+          document.getElementById('rc-prest-val').textContent=ultPu['Prestadas']||'0';
+        }
+        if(ultAro) {
+          const ocupAro2=parseInt(ultAro['Ocupadas']||0);
+          const pctAro=Math.round(ocupAro2/CAP_ARO*100);
+          document.getElementById('rc-aro').textContent=ocupAro2+' / '+CAP_ARO;
+          document.getElementById('rc-aro-bar').style.width=pctAro+'%';
+          document.getElementById('rc-aro-disp').textContent=CAP_ARO-ocupAro2;
+        }
+      }
+    } catch(e){console.warn('Cards Camas:',e);}
+
     // ── ALERTAS DINÁMICAS ──────────────────────────────
     try {
       const alertas = [];
@@ -2268,10 +2373,10 @@ async function loadResumen() {
 
       // 2. ARO
       if(ar) {
-        const totAro=parseInt(ar['Ocupadas']||0)+parseInt(ar['Disponibles']||0);
-        const pctAro=totAro>0?Math.round(parseInt(ar['Ocupadas']||0)/totAro*100):0;
-        if(pctAro>=95) alertas.push({nivel:'crit', msg:'ARO al '+pctAro+'% · '+ar['Ocupadas']+'/'+totAro+' camas · crítico', ts:ar['Fecha']||'Hoy'});
-        else if(pctAro>=80) alertas.push({nivel:'warn', msg:'ARO al '+pctAro+'% · '+ar['Ocupadas']+'/'+totAro+' camas', ts:ar['Fecha']||'Hoy'});
+        const ocupAroAlerta=parseInt(ar['Ocupadas']||0);
+        const pctAro=Math.round(ocupAroAlerta/CAP_ARO*100);
+        if(pctAro>=95) alertas.push({nivel:'crit', msg:'ARO al '+pctAro+'% · '+ocupAroAlerta+'/'+CAP_ARO+' camas · crítico', ts:ar['Fecha']||'Hoy'});
+        else if(pctAro>=80) alertas.push({nivel:'warn', msg:'ARO al '+pctAro+'% · '+ocupAroAlerta+'/'+CAP_ARO+' camas', ts:ar['Fecha']||'Hoy'});
       }
 
       // 3. Puerperio camas prestadas
