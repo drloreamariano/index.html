@@ -1894,24 +1894,23 @@ function showView(name, tabEl) {
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('.tab:not(.drop)').forEach(t => t.classList.remove('on'));
   if (tabEl) tabEl.classList.add('on');
-  const loaders = {co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio, 'sip-estadistica':()=>{}, 'sip-gestion':()=>{}, 'sip-indicadores':()=>{}};
+  const loaders = {
+    co:loadCO, aro:loadARO, puerperio:loadPuerperio,
+    hospdia:loadHospDia, consultorio:loadConsultorio,
+    'sip-estadistica':()=>{}, 'sip-gestion':()=>{}, 'sip-indicadores':()=>{},
+    'acad-docencia':()=>{}, 'acad-investigacion':()=>{}, 'acad-rotantes':loadRotantes
+  };
   if (loaders[name]) loaders[name]();
 }
 
 // ── HELPERS ────────────────────────────────────────────
 // ── CAPACIDAD REAL DEL SERVICIO ──────────────────────────
-// 63 camas totales · 8 prestadas fijas a Pediatría · 1 rota
-// Puerperio: 39 operativas (zona: ~48 - 1 rota - 8 prestadas)
-// ARO: 16 total · 12 obstétricas + 4 reservadas IVE/ILE
 const CAP_PUERPERIO = 39;
-const CAP_ARO       = 16;  // total zona ARO
-const CAP_ARO_OBST  = 12;  // ARO obstétrico (excluye IVE/ILE)
-const CAP_ARO_IVE   = 4;   // habitación IVE/ILE
-// ─────────────────────────────────────────────────────────sheet) {
-  const ts = Date.now();
-  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet) + '&ts=' + ts);
-  return res.json();
-}
+const CAP_ARO       = 16;
+const CAP_ARO_OBST  = 12;
+const CAP_ARO_IVE   = 4;
+// ─────────────────────────────────────────────────────────
+async function fetchSheet(sheet) {
 
 function parseFecha(f) {
   if (!f||f.trim()==="") return null;
