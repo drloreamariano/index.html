@@ -203,6 +203,32 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
 .giro-val { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--text); }
 .giro-sub { font-size:9px; color:var(--muted); }
 
+/* ═══ ACADÉMICO ═══ */
+.acad-section { display:flex; flex-direction:column; gap:14px; overflow-y:auto; height:100%; }
+.acad-card { background:var(--s1); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.acad-subtitle { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--border2); }
+.acad-empty { font-size:11px; color:var(--muted); font-style:italic; text-align:center; padding:16px 0; }
+.acad-table { width:100%; border-collapse:collapse; }
+.acad-table th { font-size:9px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--muted); padding-bottom:6px; border-bottom:1px solid var(--border2); text-align:left; padding-right:8px; }
+.acad-table td { padding:6px 0; font-size:10.5px; color:var(--text); border-bottom:1px solid var(--border); vertical-align:top; padding-right:8px; line-height:1.4; }
+.acad-table td.muted { color:var(--muted); }
+.acad-table td.mono { font-family:'IBM Plex Mono',monospace; }
+.acad-tag { display:inline-block; padding:2px 7px; border-radius:8px; font-size:9px; font-weight:600; }
+.acad-tag-b { background:var(--blue-d); color:var(--blue); }
+.acad-tag-g { background:var(--green-d); color:var(--green); }
+.acad-tag-a { background:var(--amber-d); color:var(--amber); }
+.acad-tag-p { background:var(--purple-d); color:var(--purple); }
+.acad-tag-t { background:var(--teal-d); color:var(--teal); }
+.acad-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
+.acad-kpi { background:var(--s2); border-radius:8px; padding:10px 12px; }
+.acad-kpi-val { font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--text); line-height:1; }
+.acad-kpi-lbl { font-size:9px; color:var(--muted); margin-top:3px; }
+.acad-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.acad-status { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+.acad-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.acad-row { display:flex; justify-content:space-between; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--border); gap:8px; }
+.acad-row:last-child { border-bottom:none; }
+
 /* CO table scrollable */
 .co-table-wrap { flex:1; overflow-y:auto; min-height:0; }
 .co-table-wrap::-webkit-scrollbar { width:3px; }
@@ -241,6 +267,14 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
         <div class="ditem" onclick="showView('sip-estadistica',null)">Estadística</div>
         <div class="ditem" onclick="showView('sip-gestion',null)">Tablero de Gestión</div>
         <div class="ditem" onclick="showView('sip-indicadores',null)">Indicadores</div>
+      </div>
+    </div>
+    <div class="tab drop" onclick="toggleDrop(this,event)">
+      Académico <span class="arr">▾</span>
+      <div class="dropdown">
+        <div class="ditem" onclick="showView('acad-docencia',null)">Docencia</div>
+        <div class="ditem" onclick="showView('acad-investigacion',null)">Investigación</div>
+        <div class="ditem" onclick="showView('acad-rotantes',null)">Rotantes</div>
       </div>
     </div>
   </div>
@@ -1581,6 +1615,179 @@ header { background:var(--s1); border-bottom:1px solid var(--border2); display:f
     </div>
   </div>
 
+  <!-- ══════════ VISTA ACADÉMICO: DOCENCIA ══════════ -->
+  <div class="view" id="view-acad-docencia">
+    <div class="acad-section">
+
+      <!-- KPIs -->
+      <div class="acad-kpis">
+        <div class="acad-kpi" style="border-left:2px solid var(--blue)">
+          <div class="acad-kpi-val" id="doc-kpi-grado">—</div>
+          <div class="acad-kpi-lbl">Alumnos grado 2026</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--purple)">
+          <div class="acad-kpi-val" id="doc-kpi-iar">—</div>
+          <div class="acad-kpi-lbl">Rotantes IAR 2026</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--teal)">
+          <div class="acad-kpi-val" id="doc-kpi-pos">—</div>
+          <div class="acad-kpi-lbl">Posgrado 2026</div>
+        </div>
+      </div>
+
+      <div class="acad-grid2">
+
+        <!-- Grado UBA -->
+        <div class="acad-card">
+          <div class="acad-subtitle">📚 Grado · UBA · Primera Cátedra</div>
+          <div id="doc-grado-body">
+            <div class="acad-empty">Sin cursadas cargadas aún</div>
+          </div>
+        </div>
+
+        <!-- IAR -->
+        <div class="acad-card">
+          <div class="acad-subtitle">🔬 IAR · Instituto de Investigación</div>
+          <div id="doc-iar-body">
+            <div class="acad-empty">Sin rotantes IAR cargados</div>
+          </div>
+        </div>
+
+        <!-- Posgrado -->
+        <div class="acad-card" style="grid-column:1/-1">
+          <div class="acad-subtitle">🎓 Posgrado · Residencias y especializaciones</div>
+          <div id="doc-pos-body">
+            <div class="acad-empty">Sin datos de posgrado cargados</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA ACADÉMICO: INVESTIGACIÓN ══════════ -->
+  <div class="view" id="view-acad-investigacion">
+    <div class="acad-section">
+
+      <!-- KPIs -->
+      <div class="acad-kpis">
+        <div class="acad-kpi" style="border-left:2px solid var(--green)">
+          <div class="acad-kpi-val" id="inv-kpi-estudios">2</div>
+          <div class="acad-kpi-lbl">Estudios en desarrollo</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--amber)">
+          <div class="acad-kpi-val" id="inv-kpi-congresos">—</div>
+          <div class="acad-kpi-lbl">Congresos 2026</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--blue)">
+          <div class="acad-kpi-val" id="inv-kpi-pubs">—</div>
+          <div class="acad-kpi-lbl">Publicaciones</div>
+        </div>
+      </div>
+
+      <!-- Estudios en desarrollo -->
+      <div class="acad-card">
+        <div class="acad-subtitle">🧪 Estudios en desarrollo</div>
+        <table class="acad-table">
+          <thead>
+            <tr>
+              <th>Estudio</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Director / PI</th>
+              <th>Sitios</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>MAG-ONE Trial</b><br><span style="font-size:9px;color:var(--muted)">Sulfato magnesio monodosis vs Zuspan · prevención eclampsia en PE grave</span></td>
+              <td><span class="acad-tag acad-tag-b">RCT multicéntrico</span></td>
+              <td><span class="acad-tag acad-tag-a">Seguro pendiente</span></td>
+              <td class="muted">Lorea MP</td>
+              <td class="muted">Posadas · Morón · Perrando</td>
+            </tr>
+            <tr>
+              <td><b>Trial Fosfomicina</b><br><span style="font-size:9px;color:var(--muted)">Monodosis vs estándar · ITU/bacteriuria asintomática en embarazo</span></td>
+              <td><span class="acad-tag acad-tag-b">No inferioridad</span></td>
+              <td><span class="acad-tag acad-tag-g">En diseño</span></td>
+              <td class="muted">Isola (dir. Lorea)</td>
+              <td class="muted">Posadas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acad-grid2">
+
+        <!-- Congresos -->
+        <div class="acad-card">
+          <div class="acad-subtitle">🎤 Presentaciones en congresos</div>
+          <div id="inv-congresos-body">
+            <div class="acad-empty">Sin presentaciones cargadas</div>
+          </div>
+        </div>
+
+        <!-- Publicaciones -->
+        <div class="acad-card">
+          <div class="acad-subtitle">📄 Publicaciones</div>
+          <div>
+            <div class="acad-row">
+              <div style="flex:1">
+                <div style="font-size:10.5px;font-weight:500">Implementación de un sistema de gobernanza clínica en tiempo real en un servicio de obstetricia de referencia nacional</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:3px">Lorea MP · Varela S · Hermida M</div>
+              </div>
+              <span class="acad-tag acad-tag-a" style="flex-shrink:0">En preparación</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA ACADÉMICO: ROTANTES ══════════ -->
+  <div class="view" id="view-acad-rotantes">
+    <div class="acad-section">
+
+      <!-- KPIs -->
+      <div class="acad-kpis">
+        <div class="acad-kpi" style="border-left:2px solid var(--blue)">
+          <div class="acad-kpi-val" id="rot-kpi-activos">—</div>
+          <div class="acad-kpi-lbl">Rotantes activos</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--green)">
+          <div class="acad-kpi-val" id="rot-kpi-anio">—</div>
+          <div class="acad-kpi-lbl">Rotantes en 2026</div>
+        </div>
+        <div class="acad-kpi" style="border-left:2px solid var(--amber)">
+          <div class="acad-kpi-val" id="rot-kpi-hospitales">—</div>
+          <div class="acad-kpi-lbl">Hospitales de origen</div>
+        </div>
+      </div>
+
+      <!-- Tabla rotantes -->
+      <div class="acad-card">
+        <div class="acad-subtitle">🏥 Médicos rotantes · otros hospitales</div>
+        <div id="rot-tabla-body">
+          <table class="acad-table" id="rot-table" style="display:none">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Hospital de origen</th>
+                <th>Especialidad</th>
+                <th>Período</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="rot-tbody"></tbody>
+          </table>
+          <div class="acad-empty" id="rot-empty">Sin rotantes cargados en el Sheets aún.<br><span style="font-size:10px">Agregar solapa "Rotantes" en el Sheets para activar esta sección.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </main>
 
 <!-- SIDEBAR DER -->
@@ -1668,7 +1875,7 @@ function recargarVista() {
   if(btn) { btn.textContent='↻ Actualizando...'; btn.style.color='var(--blue)'; }
   const vistas = ['resumen','co','aro','puerperio','ceepyp','hospdia','consultorio','sip-estadistica','sip-gestion','sip-indicadores'];
   const activa = vistas.find(v => document.getElementById('view-'+v)?.classList.contains('active')) || 'resumen';
-  const loaderMap = {resumen:loadResumen, co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio};
+  const loaderMap = {resumen:loadResumen, co:loadCO, aro:loadARO, puerperio:loadPuerperio, hospdia:loadHospDia, consultorio:loadConsultorio, 'acad-rotantes':loadRotantes};
   const fn = loaderMap[activa] || loadResumen;
   Promise.resolve(fn()).finally(()=>{ if(btn){btn.textContent='↻ Actualizar';btn.style.color='var(--muted2)';} });
 }
@@ -2113,6 +2320,53 @@ async function loadConsultorio() {
     }
   } catch(e) {
     tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--red)">Error: '+e.message+'</td></tr>';
+  }
+}
+
+// ── ACADÉMICO: ROTANTES ────────────────────────────────
+async function loadRotantes() {
+  const empty = document.getElementById('rot-empty');
+  const table = document.getElementById('rot-table');
+  const tbody = document.getElementById('rot-tbody');
+  const kpiActivos = document.getElementById('rot-kpi-activos');
+  const kpiAnio = document.getElementById('rot-kpi-anio');
+  const kpiHosp = document.getElementById('rot-kpi-hospitales');
+  try {
+    const data = await fetchSheet('Rotantes');
+    if(!data || data.length === 0) {
+      if(empty) empty.style.display='block';
+      if(table) table.style.display='none';
+      return;
+    }
+    if(empty) empty.style.display='none';
+    if(table) table.style.display='table';
+    const anioActual = new Date().getFullYear().toString();
+    const activos = data.filter(r=>!r['Fecha fin']||r['Fecha fin'].trim()==='');
+    const delAnio = data.filter(r=>r['Fecha inicio']&&r['Fecha inicio'].includes(anioActual));
+    const hospitales = [...new Set(data.map(r=>r['Hospital']||r['Hospital origen']||'').filter(h=>h))].length;
+    if(kpiActivos) kpiActivos.textContent = activos.length;
+    if(kpiAnio) kpiAnio.textContent = delAnio.length;
+    if(kpiHosp) kpiHosp.textContent = hospitales;
+    data.sort((a,b)=>{
+      const fa=parseFecha(a['Fecha inicio']||a['Fecha']), fb=parseFecha(b['Fecha inicio']||b['Fecha']);
+      if(!fa||!fb) return 0; return fb-fa;
+    });
+    tbody.innerHTML = data.map(r=>{
+      const activo = !r['Fecha fin']||r['Fecha fin'].trim()==='';
+      const estadoBadge = activo
+        ? '<span class="acad-tag acad-tag-g">Activo</span>'
+        : '<span class="acad-tag" style="background:var(--s3);color:var(--muted)">Finalizado</span>';
+      return `<tr>
+        <td><b>${r['Nombre']||r['Apellido y Nombre']||'—'}</b></td>
+        <td class="muted">${r['Hospital']||r['Hospital origen']||'—'}</td>
+        <td class="muted">${r['Especialidad']||'—'}</td>
+        <td class="mono" style="font-size:9.5px">${r['Fecha inicio']||'—'} ${r['Fecha fin']?'→ '+r['Fecha fin']:''}</td>
+        <td>${estadoBadge}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    if(empty) { empty.style.display='block'; empty.innerHTML='Solapa "Rotantes" no encontrada en el Sheets.<br><span style="font-size:10px">Crearla para activar esta sección.</span>'; }
+    if(table) table.style.display='none';
   }
 }
 
