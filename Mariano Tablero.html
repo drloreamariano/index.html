@@ -1911,6 +1911,10 @@ const CAP_ARO_OBST  = 12;
 const CAP_ARO_IVE   = 4;
 // ─────────────────────────────────────────────────────────
 async function fetchSheet(sheet) {
+  const ts = Date.now();
+  const res = await fetch(SCRIPT_URL + '?sheet=' + encodeURIComponent(sheet) + '&ts=' + ts);
+  return res.json();
+}
 
 function parseFecha(f) {
   if (!f||f.trim()==="") return null;
